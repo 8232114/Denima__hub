@@ -16,7 +16,6 @@ const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://0vhlizcpp6
 
 function App() {
 const [services, setServices] = useState(servicesData)
-  const [services, setServices] = useState([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('admin_token'))
   const [showLogin, setShowLogin] = useState(false)
