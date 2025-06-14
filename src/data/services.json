@@ -29,9 +29,12 @@
   },
   {
     "id": "S2ngUFFAlKxhQLYz698M",
+    "color": "",             
     "description": "This is a sample service.",
+    "features": [],
     "image_url": "https://example.com/sample.jpg",
     "name": "Sample Service",
+    "original_price": "",
     "price": 100
   },
   {
