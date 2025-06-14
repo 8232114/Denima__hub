@@ -1,0 +1,22 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (usually main)
+
+media_folder: "public/images/uploads" # Folder where uploaded media is stored
+public_folder: "/images/uploads" # The public path for uploaded files in the CMS
+
+collections:
+  - name: "services" # A label used in the CMS UI
+    label: "الخدمات" # The name of the collection in the CMS UI
+    folder: "src/data" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{id}}" # Filename template for new documents
+    fields: # The fields for each document, corresponding to your JSON structure
+      - {label: "ID", name: "id", widget: "string", required: true}
+      - {label: "الاسم", name: "name", widget: "string", required: true}
+      - {label: "الوصف", name: "description", widget: "string", required: true}
+      - {label: "السعر", name: "price", widget: "number", required: true}
+      - {label: "السعر الأصلي", name: "original_price", widget: "string", required: false}
+      - {label: "اللون", name: "color", widget: "string", required: false}
+      - {label: "الميزات", name: "features", widget: "list", field: {label: "ميزة", name: "feature", widget: "string"}, required: false}
+      - {label: "رابط الصورة", name: "image_url", widget: "string", required: false}
