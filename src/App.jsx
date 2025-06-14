@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
-import { Star, MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X } from 'lucide-react'
+import Home from './components/Home';import { Badge } from '@/components/ui/badge.jsx'
+import ServiceDetail from './components/ServiceDetail';
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
