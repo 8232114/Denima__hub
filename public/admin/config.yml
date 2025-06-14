@@ -18,5 +18,5 @@ collections:
       - {label: "السعر", name: "price", widget: "number", required: true}
       - {label: "السعر الأصلي", name: "original_price", widget: "string", required: false}
       - {label: "اللون", name: "color", widget: "string", required: false}
-      - {label: "الميزات", name: "features", widget: "list", field: {label: "ميزة", name: "feature", widget: "string"}, required: false}
+      # تم إزالة حقل "الميزات" مؤقتًا
       - {label: "رابط الصورة", name: "image_url", widget: "string", required: false}
