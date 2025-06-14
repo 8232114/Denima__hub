@@ -10,11 +10,12 @@ import { Label } from '@/components/ui/label.jsx'
 import heroImage from './assets/hero_image.png'
 import lightLogo from './assets/light_logo.png'
 import './App.css'
+import servicesData from './data/services.json';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://0vhlizcpp6ed.manus.space/api' : 'http://localhost:5000/api'
 
 function App() {
-  const [selectedService, setSelectedService] = useState(null)
+const [services, setServices] = useState(servicesData)
   const [services, setServices] = useState([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('admin_token'))
