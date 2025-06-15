@@ -10,11 +10,11 @@ collections:
     label: "الخدمات"
     files:
       - label: "قائمة الخدمات"
-        name: "services_data_file"
+        name: "services_list"
         file: "src/data/services.json"
         fields:
           - label: "الخدمات"
-            name: "services"
+            name: "services_array"
             widget: "list"
             summary: "{{name}}"
             fields:
