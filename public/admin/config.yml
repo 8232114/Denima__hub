@@ -8,8 +8,9 @@ public_folder: "/images/uploads"
 collections:
   - name: "services"
     label: "الخدمات"
-    file: "src/data/services.json"
-    widget: "list"
+    folder: "src/data/services"
+    create: true
+    slug: "{{name}}"
     fields:
       - {label: "المعرف", name: "id", widget: "string"}
       - {label: "اسم الخدمة", name: "name", widget: "string"}
