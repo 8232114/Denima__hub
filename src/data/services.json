@@ -1,0 +1,66 @@
+[
+  {
+    "id": "3K8sR4Pvy1HPDExLkZNN",
+    "color": "bg-red-500",
+    "description": "Netflix مميز مع جودة 4K",
+    "features": [
+      "4K Ultra HD",
+      "مشاهدة على 4 أجهزة",
+      "تحميل للمشاهدة دون اتصال",
+      "مكتبة ضخمة من الأفلام والمسلسلات"
+    ],
+    "name": "Netflix Premium",
+    "original_price": "150",
+    "price": "90"
+  },
+  {
+    "id": "Knc0IEZ5AJWdTfa1Bzb6g",
+    "color": "bg-green-500",
+    "description": "Spotify Spotify Music",
+    "features": [
+      "موسيقى بدون إعلانات",
+      "The Lord is with you",
+      "تحميل للاستماع دون اتصال",
+      "The Lord is with you"
+    ],
+    "name": "Spotify Premium",
+    "original_price": "120",
+    "price": "90"
+  },
+  {
+    "id": "S2ngUFFAlKxhQLYz698M",
+    "description": "This is a sample service.",
+    "image_url": "https://example.com/sample.jpg",
+    "name": "Sample Service",
+    "price": 100
+  },
+  {
+    "id": "rZsgsmsY2yPZ6CDm7NyEz",
+    "color": "bg-blue-500",
+    "description": "VIP VIP للمحتوى العربي",
+    "features": [
+      "محتوى عربي حصري",
+      "أفلام ومسلسلات بدون إعلانات",
+      "HD",
+      "مشاهدة على عدة أجهزة"
+    ],
+    "name": "Shahid VIP",
+    "original_price": "100",
+    "price": "90"
+  },
+  {
+    "id": "xDKsuySSAs9UrXHKSp9P",
+    "color": "bg-purple-500",
+    "description": "Amazon Prime Video",
+    "features": [
+      "أفلام ومسلسلات حصرية",
+      "4K HD",
+      "تحميل للمشاهدة دون اتصال",
+      "The Lord of the Rings"
+    ],
+    "name": "Amazon Prime Video",
+    "original_price": "130",
+    "price": "90"
+  }
+]
+
