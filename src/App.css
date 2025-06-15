@@ -114,7 +114,7 @@
 
 @layer base {
   :root {
-    --display-border-border-outline-ring/50;
+  --display-bg-background-text-foreground;
   }
 
   body {
