@@ -114,10 +114,8 @@
 
 @layer base {
   :root {
-  --display-bg-background-text-foreground;
   }
 
   body {
-    --display-bg-background-text-foreground;
   }
 }
