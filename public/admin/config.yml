@@ -8,15 +8,21 @@ public_folder: "/images/uploads"
 collections:
   - name: "services"
     label: "الخدمات"
-    folder: "src/data/services"
-    create: true
-    slug: "{{name}}"
-    fields:
-      - {label: "المعرف", name: "id", widget: "string"}
-      - {label: "اسم الخدمة", name: "name", widget: "string"}
-      - {label: "الوصف", name: "description", widget: "text"}
-      - {label: "السعر", name: "price", widget: "string"}
-      - {label: "السعر الأصلي", name: "original_price", widget: "string"}
-      - {label: "اللون", name: "color", widget: "string", default: "bg-blue-500"}
-      - {label: "الميزات", name: "features", widget: "list", default: [""]}
-      - {label: "صورة الشعار", name: "logo_url", widget: "image", required: false}
+    files:
+      - label: "قائمة الخدمات"
+        name: "services"
+        file: "src/data/services.json"
+        fields:
+          - label: "الخدمات"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "المعرف", name: "id", widget: "string"}
+              - {label: "اسم الخدمة", name: "name", widget: "string"}
+              - {label: "الوصف", name: "description", widget: "text"}
+              - {label: "السعر", name: "price", widget: "string"}
+              - {label: "السعر الأصلي", name: "original_price", widget: "string"}
+              - {label: "اللون", name: "color", widget: "string", default: "bg-blue-500"}
+              - {label: "الميزات", name: "features", widget: "list", default: [""]}
+              - {label: "صورة الشعار", name: "logo_url", widget: "image", required: false}
+
