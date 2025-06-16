@@ -14,7 +14,7 @@ import lightLogo from './assets/light_logo.png';
 import './App.css';
 import { MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X } from 'lucide-react';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://0vhlizcpp6ed.manus.space/api' : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://function-bun-production-2e13.up.railway.app/api' : 'http://localhost:5000/api'
 
 function App() {
   const [selectedService, setSelectedService] = useState(null);
