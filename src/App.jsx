@@ -24,13 +24,13 @@ function App( ) {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' })
   const [passwordForm, setPasswordForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' })
   const [serviceForm, setServiceForm] = useState({
-    name: '',
-    description: '',
-    price: '',
-    original_price: '',
-    features: [''],
-    color: 'bg-blue-500',
-    logo_url: ''
+    name: "",
+    description: "",
+    price: "",
+    original_price: "",
+    features: [""],
+    color: "bg-blue-500",
+    logo_url: ""
   })
   const [uploadingImage, setUploadingImage] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
@@ -72,9 +72,6 @@ function App( ) {
       if (response.ok) {
         const data = await response.json()
         setServices(data)
-      } else {
-        // If API fails, set services to an empty array to prevent errors
-        setServices([])
       }
     } catch (error) {
       console.error('Error fetching services:', error)
@@ -365,7 +362,7 @@ function App( ) {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 space-x-reverse">
-              <div className="w-16 h-16 flex items-center justify-center">
+              <div className="w-32 h-32 flex items-center justify-center">
                 <img src={denimaHubLogo} alt="Denima Hub Logo" className="w-full h-full object-contain" />
               </div>
             </div>
