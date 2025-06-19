@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { Star, MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu } from 'lucide-react'
+import { Star, MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu, Globe, ShoppingCart } from 'lucide-react'
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
@@ -25,6 +25,7 @@ function App() {
   const [showChangePassword, setShowChangePassword] = useState(false)
   const [showOfferManagement, setShowOfferManagement] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentLanguage, setCurrentLanguage] = useState('ar')
   const [loginForm, setLoginForm] = useState({ username: '', password: '' })
   const [passwordForm, setPasswordForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' })
   const [serviceForm, setServiceForm] = useState({
@@ -38,6 +39,61 @@ function App() {
   })
   const [uploadingImage, setUploadingImage] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
+
+  // Language translations
+  const translations = {
+    ar: {
+      adminLogin: 'تسجيل دخول المسؤول',
+      contactUs: 'تواصل معنا',
+      orderNow: 'اطلب الآن',
+      language: 'اللغة',
+      hero: {
+        title: 'استمتع بعالم من الترفيه اللامحدود',
+        subtitle: 'احصل على حسابات Netflix، Spotify، Shahid VIP، Amazon Prime Video بأفضل الأسعار في المغرب',
+        features: ['حسابات أصلية ومضمونة', 'أسعار لا تقاوم - 90 درهم فقط', 'تفعيل فوري']
+      },
+      services: 'خدماتنا المتاحة',
+      whyChoose: 'لماذا تختار Denima_hub؟',
+      contact: 'تواصل معنا'
+    },
+    fr: {
+      adminLogin: 'Connexion Admin',
+      contactUs: 'Contactez-nous',
+      orderNow: 'Commander',
+      language: 'Langue',
+      hero: {
+        title: 'Profitez d\'un monde de divertissement illimité',
+        subtitle: 'Obtenez des comptes Netflix, Spotify, Shahid VIP, Amazon Prime Video aux meilleurs prix au Maroc',
+        features: ['Comptes originaux et garantis', 'Prix imbattables - seulement 90 dirhams', 'Activation immédiate']
+      },
+      services: 'Nos services disponibles',
+      whyChoose: 'Pourquoi choisir Denima_hub ?',
+      contact: 'Contactez-nous'
+    },
+    en: {
+      adminLogin: 'Admin Login',
+      contactUs: 'Contact Us',
+      orderNow: 'Order Now',
+      language: 'Language',
+      hero: {
+        title: 'Enjoy a world of unlimited entertainment',
+        subtitle: 'Get Netflix, Spotify, Shahid VIP, Amazon Prime Video accounts at the best prices in Morocco',
+        features: ['Original and guaranteed accounts', 'Unbeatable prices - only 90 dirhams', 'Instant activation']
+      },
+      services: 'Our available services',
+      whyChoose: 'Why choose Denima_hub?',
+      contact: 'Contact us'
+    }
+  }
+
+  const t = translations[currentLanguage]
+
+  const toggleLanguage = () => {
+    const languages = ['ar', 'fr', 'en']
+    const currentIndex = languages.indexOf(currentLanguage)
+    const nextIndex = (currentIndex + 1) % languages.length
+    setCurrentLanguage(languages[nextIndex])
+  }
 
   const contactMethods = [
     {
@@ -360,19 +416,31 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 space-x-reverse">
-              <div className="w-32 h-32 flex items-center justify-center">
+            {/* Logo on the left */}
+            <div className="flex items-center">
+              <div className="w-24 h-24 flex items-center justify-center">
                 <img src={denimaHubLogo} alt="Denima Hub Logo" className="w-full h-full object-contain" />
               </div>
             </div>
             
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-3">
+              {/* Language Toggle */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleLanguage}
+                className="flex items-center gap-2"
+              >
+                <Globe className="w-4 h-4" />
+                {currentLanguage === 'ar' ? 'عربي' : currentLanguage === 'fr' ? 'Français' : 'English'}
+              </Button>
+
               {isAdmin ? (
                 <>
                   <Button 
@@ -409,19 +477,32 @@ function App() {
                   onClick={() => setShowLogin(true)}
                 >
                   <LogIn className="w-4 h-4 ml-2" />
-                  تسجيل دخول المسؤول
+                  {t.adminLogin}
                 </Button>
               )}
+              
+              {/* Prominent Contact/Order Button */}
               <Button 
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold px-6 py-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 onClick={scrollToContact}
               >
-                تواصل معنا
+                <ShoppingCart className="w-4 h-4 ml-2" />
+                {t.orderNow}
               </Button>
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center gap-2">
+              {/* Mobile Language Toggle */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleLanguage}
+                className="flex items-center gap-1"
+              >
+                <Globe className="w-4 h-4" />
+              </Button>
+              
               <Button
                 variant="outline"
                 size="sm"
@@ -435,8 +516,20 @@ function App() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden mt-4 border-t pt-4 bg-white relative z-40">
-              <div className="flex flex-col gap-2">
+            <div className="md:hidden mt-4 border-t pt-4 bg-white relative z-40 shadow-lg rounded-lg">
+              <div className="flex flex-col gap-3 p-4">
+                {/* Prominent Order Button for Mobile */}
+                <Button 
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold w-full"
+                  onClick={() => {
+                    scrollToContact()
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  <ShoppingCart className="w-4 h-4 ml-2" />
+                  {t.orderNow}
+                </Button>
+
                 {isAdmin ? (
                   <>
                     <Button 
@@ -445,7 +538,7 @@ function App() {
                         setShowChangePassword(true)
                         setMobileMenuOpen(false)
                       }}
-                      className="text-sm w-full"
+                      className="w-full"
                     >
                       تغيير كلمة المرور
                     </Button>
@@ -492,18 +585,9 @@ function App() {
                     className="w-full"
                   >
                     <LogIn className="w-4 h-4 ml-2" />
-                    تسجيل دخول المسؤول
+                    {t.adminLogin}
                   </Button>
                 )}
-                <Button 
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 w-full"
-                  onClick={() => {
-                    scrollToContact()
-                    setMobileMenuOpen(false)
-                  }}
-                >
-                  تواصل معنا
-                </Button>
               </div>
             </div>
           )}
@@ -511,31 +595,29 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-16 px-4">
+      <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <div className="mb-8">
-            <img 
-              src={heroImage} 
-              alt="Denima Hub - خدمات الترفيه الرقمي" 
-              className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl"
-            />
+          <div className="max-w-4xl mx-auto mb-12">
+            <img src={heroImage} alt="Hero" className="w-full max-w-md mx-auto mb-8 rounded-2xl shadow-2xl" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            استمتع بعالم من الترفيه اللامحدود
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            احصل على حسابات Netflix، Spotify، Shahid VIP، Amazon Prime Video بأفضل الأسعار في المغرب
+          
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+            {t.hero.title}
+          </h1>
+          
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            {t.hero.subtitle}
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              ✅ حسابات أصلية ومضمونة
-            </Badge>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              💰 أسعار لا تقاوم - 90 درهم فقط
-            </Badge>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              🚀 تفعيل فوري
-            </Badge>
+          
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            {t.hero.features.map((feature, index) => (
+              <div key={index} className="flex items-center bg-white rounded-full px-6 py-3 shadow-lg">
+                <span className="text-green-600 text-2xl ml-3">
+                  {index === 0 ? '✅' : index === 1 ? '💰' : '🚀'}
+                </span>
+                <span className="text-gray-700 font-medium">{feature}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -544,7 +626,7 @@ function App() {
       <section className="py-16 px-4 bg-gray-100">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            خدماتنا المتاحة
+            {t.services}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service) => (
