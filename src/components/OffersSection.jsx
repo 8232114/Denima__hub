@@ -89,31 +89,31 @@ const OffersSection = ({ services, API_BASE_URL }) => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-orange-50 to-red-50">
+    <section className="py-8 md:py-16 bg-gradient-to-br from-orange-50 to-red-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
             عروض خاصة - اختر 3 منتجات 🔥
           </h2>
-          <p className="text-xl text-gray-700 mb-6">
+          <p className="text-lg md:text-xl text-gray-700 mb-4 md:mb-6 px-2">
             اختر أي 3 منتجات من مجموعتنا واحصل عليها بسعر مميز
           </p>
-          <div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg">
+          <div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 md:px-8 py-2 md:py-3 rounded-full text-base md:text-lg font-bold shadow-lg">
             💰 {offer.price || '200'} درهم فقط للثلاثة منتجات 💰
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-12 items-start">
           {/* Selection Area */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl border-2 border-orange-200">
-            <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">منتجاتك المختارة</h3>
+          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-8 shadow-xl border-2 border-orange-200">
+            <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center text-gray-800">منتجاتك المختارة</h3>
             
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
               {[0, 1, 2].map((index) => (
-                <div key={index} className="flex items-center gap-4 p-4 border-2 border-dashed border-gray-300 rounded-lg min-h-[80px]">
+                <div key={index} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 border-2 border-dashed border-gray-300 rounded-lg min-h-[70px] md:min-h-[80px]">
                   {selectedProducts[index] ? (
-                    <div className="flex items-center gap-4 w-full">
-                      <div className="w-16 h-16 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 border border-gray-200">
+                    <div className="flex items-center gap-3 md:gap-4 w-full">
+                      <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 border border-gray-200">
                         {selectedProducts[index].logo_url ? (
                           <img src={`${API_BASE_URL}${selectedProducts[index].logo_url}`} alt={selectedProducts[index].name} className="w-full h-full object-cover" />
                         ) : (
@@ -122,9 +122,9 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                           </div>
                         )}
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold">{selectedProducts[index].name}</h4>
-                        <p className="text-sm text-gray-600">{selectedProducts[index].description}</p>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm md:text-base truncate">{selectedProducts[index].name}</h4>
+                        <p className="text-xs md:text-sm text-gray-600 line-clamp-2">{selectedProducts[index].description}</p>
                       </div>
                       <Button
                         variant="outline"
@@ -136,45 +136,44 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                       </Button>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-4 w-full text-gray-400">
-                      <div className="w-12 h-12 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                        <Plus className="w-6 h-6" />
+                    <div className="flex items-center gap-3 md:gap-4 w-full text-gray-400">
+                      <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                        <Plus className="w-4 h-4 md:w-6 md:h-6" />
                       </div>
-                      <span>اختر منتج</span>
-                      {index < 2 && <span className="ml-auto text-2xl">+</span>}
-                      {index === 2 && <span className="ml-auto text-2xl">=</span>}
+                      <span className="text-sm md:text-base">اختر منتج</span>
+                      {index < 2 && <span className="ml-auto text-xl md:text-2xl">+</span>}
+                      {index === 2 && <span className="ml-auto text-xl md:text-2xl">=</span>}
                     </div>
-                  )}
                   )}
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Button
                 onClick={handleWhatsAppOrder}
                 disabled={selectedProducts.length !== 3}
-                className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
               >
                 طلب عبر واتساب 📱
               </Button>
               <Button
                 onClick={handleReset}
                 variant="outline"
-                className="px-6 py-3"
+                className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base"
                 disabled={selectedProducts.length === 0}
               >
-                <RotateCcw className="w-4 h-4 ml-2" />
+                <RotateCcw className="w-3 h-3 md:w-4 md:h-4 ml-2" />
                 إعادة تعيين
               </Button>
             </div>
           </div>
 
           {/* Products Grid */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl border-2 border-orange-200">
-            <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">المنتجات المتاحة</h3>
+          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-8 shadow-xl border-2 border-orange-200">
+            <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center text-gray-800">المنتجات المتاحة</h3>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
               {offer.products.map((product) => (
                 <Card
                   key={product.id}
@@ -185,9 +184,9 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                   }`}
                   onClick={() => handleProductSelect(product)}
                 >
-                  <CardContent className="p-4">
-                    <div className="flex flex-col items-center text-center space-y-3">
-                      <div className="w-20 h-20 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-2 border border-gray-200 bg-white">
+                  <CardContent className="p-2 md:p-4">
+                    <div className="flex flex-col items-center text-center space-y-2 md:space-y-3">
+                      <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 md:p-2 border border-gray-200 bg-white">
                         {product.logo_url ? (
                           <img 
                             src={`${API_BASE_URL}${product.logo_url}`} 
@@ -196,18 +195,18 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                           />
                         ) : (
                           <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded">
-                            <span className="text-2xl font-bold text-gray-400">
+                            <span className="text-lg md:text-2xl font-bold text-gray-400">
                               {product.name.charAt(0)}
                             </span>
                           </div>
                         )}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-sm mb-1">{product.name}</h4>
+                        <h4 className="font-semibold text-xs md:text-sm mb-1 line-clamp-1">{product.name}</h4>
                         <p className="text-xs text-gray-600 line-clamp-2">{product.description}</p>
                       </div>
                       {selectedProducts.find(p => p.id === product.id) && (
-                        <Badge className="bg-green-500 text-white">
+                        <Badge className="bg-green-500 text-white text-xs">
                           ✓ مختار
                         </Badge>
                       )}
