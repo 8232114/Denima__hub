@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { Star, MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X } from 'lucide-react'
+import { Star, MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu } from 'lucide-react'
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
@@ -24,6 +24,7 @@ function App() {
   const [editingService, setEditingService] = useState(null)
   const [showChangePassword, setShowChangePassword] = useState(false)
   const [showOfferManagement, setShowOfferManagement] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [loginForm, setLoginForm] = useState({ username: '', password: '' })
   const [passwordForm, setPasswordForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' })
   const [serviceForm, setServiceForm] = useState({
@@ -369,7 +370,9 @@ function App() {
                 <img src={denimaHubLogo} alt="Denima Hub Logo" className="w-full h-full object-contain" />
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-2">
               {isAdmin ? (
                 <>
                   <Button 
@@ -416,7 +419,94 @@ function App() {
                 تواصل معنا
               </Button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="relative z-50"
+              >
+                <Menu className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 border-t pt-4 bg-white relative z-40">
+              <div className="flex flex-col gap-2">
+                {isAdmin ? (
+                  <>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        setShowChangePassword(true)
+                        setMobileMenuOpen(false)
+                      }}
+                      className="text-sm w-full"
+                    >
+                      تغيير كلمة المرور
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        setShowAddService(true)
+                        setMobileMenuOpen(false)
+                      }}
+                      className="w-full"
+                    >
+                      <Plus className="w-4 h-4 ml-2" />
+                      إضافة خدمة
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        setShowOfferManagement(true)
+                        setMobileMenuOpen(false)
+                      }}
+                      className="w-full"
+                    >
+                      <Edit className="w-4 h-4 ml-2" />
+                      إدارة العروض
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        handleLogout()
+                        setMobileMenuOpen(false)
+                      }}
+                      className="w-full"
+                    >
+                      تسجيل خروج
+                    </Button>
+                  </>
+                ) : (
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      setShowLogin(true)
+                      setMobileMenuOpen(false)
+                    }}
+                    className="w-full"
+                  >
+                    <LogIn className="w-4 h-4 ml-2" />
+                    تسجيل دخول المسؤول
+                  </Button>
+                )}
+                <Button 
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 w-full"
+                  onClick={() => {
+                    scrollToContact()
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  تواصل معنا
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
