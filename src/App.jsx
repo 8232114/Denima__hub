@@ -79,6 +79,19 @@ function App() {
         save: 'حفظ',
         cancel: 'إلغاء',
         close: 'إغلاق'
+      },
+      offers: {
+        title: 'عروض خاصة - اختر 3 منتجات 🔥',
+        subtitle: 'اختر أي 3 منتجات من مجموعتنا واحصل عليها بسعر مميز',
+        currency: 'درهم',
+        onlyForThree: 'فقط للثلاثة منتجات',
+        yourSelectedProducts: 'منتجاتك المختارة',
+        noImage: 'لا توجد صورة',
+        selectProduct: 'اختر منتج',
+        orderViaWhatsapp: 'طلب عبر واتساب',
+        reset: 'إعادة تعيين',
+        availableProducts: 'المنتجات المتاحة',
+        selected: 'مختار'
       }
     },
     fr: {
@@ -118,6 +131,19 @@ function App() {
         save: 'Enregistrer',
         cancel: 'Annuler',
         close: 'Fermer'
+      },
+      offers: {
+        title: 'Offres spéciales - Choisissez 3 produits 🔥',
+        subtitle: 'Choisissez 3 produits de notre collection et obtenez-les à un prix spécial',
+        currency: 'Dirham',
+        onlyForThree: 'seulement pour trois produits',
+        yourSelectedProducts: 'Vos produits sélectionnés',
+        noImage: 'Pas d\'image',
+        selectProduct: 'Sélectionner un produit',
+        orderViaWhatsapp: 'Commander via WhatsApp',
+        reset: 'Réinitialiser',
+        availableProducts: 'Produits disponibles',
+        selected: 'Sélectionné'
       }
     },
     en: {
@@ -157,6 +183,19 @@ function App() {
         save: 'Save',
         cancel: 'Cancel',
         close: 'Close'
+      },
+      offers: {
+        title: 'Special Offers - Choose 3 Products 🔥',
+        subtitle: 'Choose any 3 products from our collection and get them at a special price',
+        currency: 'Dirham',
+        onlyForThree: 'only for three products',
+        yourSelectedProducts: 'Your Selected Products',
+        noImage: 'No Image',
+        selectProduct: 'Select a product',
+        orderViaWhatsapp: 'Order via WhatsApp',
+        reset: 'Reset',
+        availableProducts: 'Available Products',
+        selected: 'Selected'
       }
     }
   }
@@ -776,7 +815,7 @@ function App() {
       </section>
 
       {/* Offers Section */}
-      <OffersSection services={services} API_BASE_URL={API_BASE_URL} />
+      <OffersSection services={services} API_BASE_URL={API_BASE_URL} currentLanguage={currentLanguage} t={t} />
 
       {/* Why Choose Us Section */}
       <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
