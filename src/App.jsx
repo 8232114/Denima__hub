@@ -548,13 +548,14 @@ function App() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service) => (
-              <Card key={service.id} className="hover:shadow-lg transition-shadow duration-300 relative">
+              <Card key={service.id} className="hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out relative group cursor-pointer transform hover:-translate-y-2">
                 {isAdmin && (
-                  <div className="absolute top-2 left-2 flex gap-1">
+                  <div className="absolute top-2 left-2 flex gap-1 z-10">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => startEdit(service)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     >
                       <Edit className="w-3 h-3" />
                     </Button>
@@ -562,13 +563,14 @@ function App() {
                       size="sm"
                       variant="outline"
                       onClick={() => handleDeleteService(service.id)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     >
                       <Trash2 className="w-3 h-3" />
                     </Button>
                   </div>
                 )}
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
                     {service.logo_url ? (
                       <img src={`${API_BASE_URL}${service.logo_url}`} alt={service.name} className="w-full h-full object-contain" />
                     ) : (
@@ -577,18 +579,18 @@ function App() {
                       </div>
                     )}
                   </div>
-                  <CardTitle className="text-xl">{service.name}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
+                  <CardTitle className="text-xl group-hover:text-purple-600 transition-colors duration-300">{service.name}</CardTitle>
+                  <CardDescription className="group-hover:text-gray-700 transition-colors duration-300">{service.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="text-center mb-4">
-                    <span className="text-3xl font-bold text-green-600">{service.price} درهم</span>
+                    <span className="text-3xl font-bold text-green-600 group-hover:text-green-700 transition-colors duration-300">{service.price} درهم</span>
                     <span className="text-lg text-gray-500 line-through mr-2">{service.original_price} درهم</span>
                   </div>
                   <ul className="space-y-2">
                     {service.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-sm text-gray-600">
-                        <Star className="w-4 h-4 text-yellow-500 ml-2" />
+                      <li key={index} className="flex items-center text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+                        <Star className="w-4 h-4 text-yellow-500 ml-2 group-hover:text-yellow-600 transition-colors duration-300" />
                         {feature}
                       </li>
                     ))}
@@ -596,7 +598,7 @@ function App() {
                 </CardContent>
                 <CardFooter>
                   <Button 
-                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                     onClick={() => {
                       const whatsappMessage = `مرحبًا 👋\nأنا مهتم بشراء حساب ${service.name} من موقع Denima Hub.\nهل يمكنك تزويدي بالتفاصيل وطريقة الدفع؟\n\nشكرًا لك 🙏`;
                       const whatsappUrl = `https://api.whatsapp.com/send/?phone=212633785269&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`;
