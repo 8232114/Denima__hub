@@ -202,6 +202,10 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                   </CardHeader>
                   <CardContent className="text-center">
                     <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-green-600 font-bold">{product.price} درهم</span>
+                      <span className="text-gray-400 line-through text-sm">{product.original_price}</span>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
