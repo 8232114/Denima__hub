@@ -113,13 +113,15 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                 <div key={index} className="flex items-center gap-4 p-4 border-2 border-dashed border-gray-300 rounded-lg min-h-[80px]">
                   {selectedProducts[index] ? (
                     <div className="flex items-center gap-4 w-full">
-                      {selectedProducts[index].logo_url ? (
-                        <img src={`${API_BASE_URL}${selectedProducts[index].logo_url}`} alt={selectedProducts[index].name} className="w-full h-full object-contain" />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center">
-                          <span className="text-xs text-gray-500">لا توجد صورة</span>
-                        </div>
-                      )}
+                      <div className="w-16 h-16 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 border border-gray-200">
+                        {selectedProducts[index].logo_url ? (
+                          <img src={`${API_BASE_URL}${selectedProducts[index].logo_url}`} alt={selectedProducts[index].name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <span className="text-xs text-gray-500">لا توجد صورة</span>
+                          </div>
+                        )}
+                      </div>
                       <div className="flex-1">
                         <h4 className="font-semibold">{selectedProducts[index].name}</h4>
                         <p className="text-sm text-gray-600">{selectedProducts[index].description}</p>
@@ -143,73 +145,73 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                       {index === 2 && <span className="ml-auto text-2xl">=</span>}
                     </div>
                   )}
-                  {index < 2 && selectedProducts[index] && <span className="text-2xl text-orange-500 font-bold">+</span>}
-                  {index === 2 && selectedProducts[index] && <span className="text-2xl text-green-500 font-bold">=</span>}
+                  )}
                 </div>
               ))}
             </div>
 
-            <div className="text-center mb-6">
-              <div className="text-3xl font-bold text-green-600 mb-2">المجموع:</div>
-              <div className="text-4xl font-bold text-green-600">{offer.price || '200'} درهم</div>
-            </div>
-
             <div className="flex gap-4">
-              {selectedProducts.length === 3 ? (
-                <Button
-                  onClick={handleWhatsAppOrder}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 text-lg font-bold rounded-xl shadow-lg"
-                >
-                  اطلب الآن عبر واتساب 📱
-                </Button>
-              ) : (
-                <Button
-                  disabled
-                  className="flex-1 bg-gray-300 text-gray-500 py-3 text-lg font-bold rounded-xl cursor-not-allowed"
-                >
-                  اختر 3 منتجات أخرى
-                </Button>
-              )}
-              
-              {selectedProducts.length > 0 && (
-                <Button
-                  onClick={handleReset}
-                  variant="outline"
-                  className="px-6 py-3 rounded-xl"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  إعادة تعيين
-                </Button>
-              )}
+              <Button
+                onClick={handleWhatsAppOrder}
+                disabled={selectedProducts.length !== 3}
+                className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                طلب عبر واتساب 📱
+              </Button>
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="px-6 py-3"
+                disabled={selectedProducts.length === 0}
+              >
+                <RotateCcw className="w-4 h-4 ml-2" />
+                إعادة تعيين
+              </Button>
             </div>
           </div>
 
           {/* Products Grid */}
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">اختر من المنتجات المتاحة</h3>
+          <div className="bg-white rounded-2xl p-8 shadow-xl border-2 border-orange-200">
+            <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">المنتجات المتاحة</h3>
+            
             <div className="grid grid-cols-2 gap-4">
               {offer.products.map((product) => (
                 <Card
                   key={product.id}
-                  className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg border-2 ${
                     selectedProducts.find(p => p.id === product.id)
-                      ? 'ring-2 ring-orange-500 bg-orange-50'
-                      : 'hover:shadow-xl'
-                  } ${!offer.is_active ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-gray-200 hover:border-orange-300'
+                  }`}
                   onClick={() => handleProductSelect(product)}
                 >
-                  <CardHeader className="text-center pb-2">
-                    {product.logo_url ? (
-                      <img src={`${API_BASE_URL}${product.logo_url}`} alt={product.name} className="w-full h-full object-contain" />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center">
-                        <span className="text-xs text-gray-500">لا توجد صورة</span>
+                  <CardContent className="p-4">
+                    <div className="flex flex-col items-center text-center space-y-3">
+                      <div className="w-20 h-20 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-2 border border-gray-200 bg-white">
+                        {product.logo_url ? (
+                          <img 
+                            src={`${API_BASE_URL}${product.logo_url}`} 
+                            alt={product.name} 
+                            className="w-full h-full object-contain"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded">
+                            <span className="text-2xl font-bold text-gray-400">
+                              {product.name.charAt(0)}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    <CardTitle className="text-lg">{product.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center">
-                    <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+                      <div>
+                        <h4 className="font-semibold text-sm mb-1">{product.name}</h4>
+                        <p className="text-xs text-gray-600 line-clamp-2">{product.description}</p>
+                      </div>
+                      {selectedProducts.find(p => p.id === product.id) && (
+                        <Badge className="bg-green-500 text-white">
+                          ✓ مختار
+                        </Badge>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
