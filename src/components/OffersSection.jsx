@@ -113,9 +113,13 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                 <div key={index} className="flex items-center gap-4 p-4 border-2 border-dashed border-gray-300 rounded-lg min-h-[80px]">
                   {selectedProducts[index] ? (
                     <div className="flex items-center gap-4 w-full">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
-                        {selectedProducts[index].name.charAt(0)}
-                      </div>
+                      {selectedProducts[index].logo_url ? (
+                        <img src={`${API_BASE_URL}${selectedProducts[index].logo_url}`} alt={selectedProducts[index].name} className="w-full h-full object-contain" />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center">
+                          <span className="text-xs text-gray-500">لا توجد صورة</span>
+                        </div>
+                      )}
                       <div className="flex-1">
                         <h4 className="font-semibold">{selectedProducts[index].name}</h4>
                         <p className="text-sm text-gray-600">{selectedProducts[index].description}</p>
@@ -195,9 +199,13 @@ const OffersSection = ({ services, API_BASE_URL }) => {
                   onClick={() => handleProductSelect(product)}
                 >
                   <CardHeader className="text-center pb-2">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mb-3">
-                      {product.name.charAt(0)}
-                    </div>
+                    {product.logo_url ? (
+                      <img src={`${API_BASE_URL}${product.logo_url}`} alt={product.name} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-xs text-gray-500">لا توجد صورة</span>
+                      </div>
+                    )}
                     <CardTitle className="text-lg">{product.name}</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
