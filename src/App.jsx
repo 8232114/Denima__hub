@@ -711,8 +711,8 @@ function App() {
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto mb-12">
-            <img src={heroImage} alt="Hero" className="w-full max-w-2xl mx-auto mb-8 rounded-2xl shadow-2xl" />
+          <div className="max-w-6xl mx-auto mb-12">
+            <img src={heroImage} alt="Hero" className="w-full max-w-4xl mx-auto mb-8 rounded-2xl shadow-2xl" />
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
