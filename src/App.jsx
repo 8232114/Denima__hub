@@ -54,7 +54,32 @@ function App() {
       },
       services: 'خدماتنا المتاحة',
       whyChoose: 'لماذا تختار Denima_hub؟',
-      contact: 'تواصل معنا'
+      contact: 'تواصل معنا',
+      whyChooseFeatures: {
+        instant: 'تفعيل فوري',
+        instantDesc: 'بمجرد إتمام عملية الشراء، يتم تفعيل حسابك على الفور ليبدأ الاستمتاع دون تأخير.',
+        bestPrices: 'أفضل الأسعار',
+        bestPricesDesc: 'نقدم لك أفضل الأسعار في السوق المغربي لضمان حصولك على أقصى قيمة مقابل أموالك.',
+        guaranteedAccounts: 'حسابات مضمونة',
+        guaranteedAccountsDesc: 'جميع حساباتنا أصلية وتعمل بشكل مثالي مع ضمان ...'
+      },
+      contactMethods: {
+        whatsapp: 'واتساب',
+        phone: 'هاتف',
+        email: 'بريد إلكتروني'
+      },
+      buttons: {
+        addService: 'إضافة خدمة',
+        editService: 'تعديل الخدمة',
+        deleteService: 'حذف الخدمة',
+        changePassword: 'تغيير كلمة المرور',
+        manageOffers: 'إدارة العروض',
+        logout: 'تسجيل خروج',
+        login: 'تسجيل الدخول',
+        save: 'حفظ',
+        cancel: 'إلغاء',
+        close: 'إغلاق'
+      }
     },
     fr: {
       adminLogin: 'Connexion Admin',
@@ -68,7 +93,32 @@ function App() {
       },
       services: 'Nos services disponibles',
       whyChoose: 'Pourquoi choisir Denima_hub ?',
-      contact: 'Contactez-nous'
+      contact: 'Contactez-nous',
+      whyChooseFeatures: {
+        instant: 'Activation immédiate',
+        instantDesc: 'Dès que vous effectuez votre achat, votre compte est activé immédiatement pour commencer à profiter sans délai.',
+        bestPrices: 'Meilleurs prix',
+        bestPricesDesc: 'Nous vous offrons les meilleurs prix du marché marocain pour garantir la meilleure valeur pour votre argent.',
+        guaranteedAccounts: 'Comptes garantis',
+        guaranteedAccountsDesc: 'Tous nos comptes sont originaux et fonctionnent parfaitement avec garantie ...'
+      },
+      contactMethods: {
+        whatsapp: 'WhatsApp',
+        phone: 'Téléphone',
+        email: 'E-mail'
+      },
+      buttons: {
+        addService: 'Ajouter un service',
+        editService: 'Modifier le service',
+        deleteService: 'Supprimer le service',
+        changePassword: 'Changer le mot de passe',
+        manageOffers: 'Gérer les offres',
+        logout: 'Déconnexion',
+        login: 'Connexion',
+        save: 'Enregistrer',
+        cancel: 'Annuler',
+        close: 'Fermer'
+      }
     },
     en: {
       adminLogin: 'Admin Login',
@@ -82,7 +132,32 @@ function App() {
       },
       services: 'Our available services',
       whyChoose: 'Why choose Denima_hub?',
-      contact: 'Contact us'
+      contact: 'Contact us',
+      whyChooseFeatures: {
+        instant: 'Instant activation',
+        instantDesc: 'As soon as you complete your purchase, your account is activated immediately to start enjoying without delay.',
+        bestPrices: 'Best prices',
+        bestPricesDesc: 'We offer you the best prices in the Moroccan market to ensure the best value for your money.',
+        guaranteedAccounts: 'Guaranteed accounts',
+        guaranteedAccountsDesc: 'All our accounts are original and work perfectly with guarantee ...'
+      },
+      contactMethods: {
+        whatsapp: 'WhatsApp',
+        phone: 'Phone',
+        email: 'Email'
+      },
+      buttons: {
+        addService: 'Add Service',
+        editService: 'Edit Service',
+        deleteService: 'Delete Service',
+        changePassword: 'Change Password',
+        manageOffers: 'Manage Offers',
+        logout: 'Logout',
+        login: 'Login',
+        save: 'Save',
+        cancel: 'Cancel',
+        close: 'Close'
+      }
     }
   }
 
@@ -98,21 +173,21 @@ function App() {
   const contactMethods = [
     {
       icon: <MessageCircle className="w-5 h-5" />,
-      label: 'واتساب',
+      label: t.contactMethods.whatsapp,
       value: '+212633785269',
       action: 'whatsapp',
       link: 'https://api.whatsapp.com/send/?phone=212633785269&type=phone_number&app_absent=0'
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      label: 'هاتف',
+      label: t.contactMethods.phone,
       value: '+212633785269',
       action: 'phone',
       link: 'tel:+212633785269'
     },
     {
       icon: <Mail className="w-5 h-5" />,
-      label: 'بريد إلكتروني',
+      label: t.contactMethods.email,
       value: 'stoream665@gmail.com',
       action: 'email',
       link: 'mailto:stoream665@gmail.com'
@@ -598,7 +673,7 @@ function App() {
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
           <div className="max-w-4xl mx-auto mb-12">
-            <img src={heroImage} alt="Hero" className="w-full max-w-md mx-auto mb-8 rounded-2xl shadow-2xl" />
+            <img src={heroImage} alt="Hero" className="w-full max-w-2xl mx-auto mb-8 rounded-2xl shadow-2xl" />
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
@@ -682,12 +757,16 @@ function App() {
                   <Button 
                     className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                     onClick={() => {
-                      const whatsappMessage = `مرحبًا 👋\nأنا مهتم بشراء حساب ${service.name} من موقع Denima Hub.\nهل يمكنك تزويدي بالتفاصيل وطريقة الدفع؟\n\nشكرًا لك 🙏`;
+                      const whatsappMessage = currentLanguage === 'ar' ? 
+                        `مرحبًا 👋\nأنا مهتم بشراء حساب ${service.name} من موقع Denima Hub.\nهل يمكنك تزويدي بالتفاصيل وطريقة الدفع؟\n\nشكرًا لك 🙏` :
+                        currentLanguage === 'fr' ?
+                        `Bonjour 👋\nJe suis intéressé par l'achat d'un compte ${service.name} du site Denima Hub.\nPouvez-vous me fournir les détails et le mode de paiement ?\n\nMerci 🙏` :
+                        `Hello 👋\nI'm interested in purchasing a ${service.name} account from Denima Hub website.\nCan you provide me with the details and payment method?\n\nThank you 🙏`;
                       const whatsappUrl = `https://api.whatsapp.com/send/?phone=212633785269&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`;
                       window.open(whatsappUrl, '_blank');
                     }}
                   >
-                    اطلب الآن
+                    {t.orderNow}
                   </Button>
                 </CardFooter>
               </Card>
@@ -703,29 +782,29 @@ function App() {
       <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            لماذا تختار Denima__hub؟
+            {t.whyChoose}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">✓</span>
               </div>
-              <h4 className="text-xl font-semibold mb-2">حسابات مضمونة</h4>
-              <p className="text-gray-600">جميع حساباتنا أصلية وتعمل بشكل مثالي مع ضمان ...</p>
+              <h4 className="text-xl font-semibold mb-2">{t.whyChooseFeatures.guaranteedAccounts}</h4>
+              <p className="text-gray-600">{t.whyChooseFeatures.guaranteedAccountsDesc}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">💰</span>
               </div>
-              <h4 className="text-xl font-semibold mb-2">أفضل الأسعار</h4>
-              <p className="text-gray-600">نقدم لك أفضل الأسعار في السوق المغربي لضمان حصولك على أقصى قيمة مقابل أموالك.</p>
+              <h4 className="text-xl font-semibold mb-2">{t.whyChooseFeatures.bestPrices}</h4>
+              <p className="text-gray-600">{t.whyChooseFeatures.bestPricesDesc}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">🚀</span>
               </div>
-              <h4 className="text-xl font-semibold mb-2">تفعيل فوري</h4>
-              <p className="text-gray-600">بمجرد إتمام عملية الشراء، يتم تفعيل حسابك على الفور لتبدأ بالاستمتاع دون تأخير.</p>
+              <h4 className="text-xl font-semibold mb-2">{t.whyChooseFeatures.instant}</h4>
+              <p className="text-gray-600">{t.whyChooseFeatures.instantDesc}</p>
             </div>
           </div>
         </div>
@@ -734,9 +813,11 @@ function App() {
       {/* Contact Section */}
       <section id="contact-section" className="py-16 px-4 bg-gray-900 text-white">
         <div className="container mx-auto text-center">
-          <h3 className="text-3xl font-bold mb-8">تواصل معنا</h3>
+          <h3 className="text-3xl font-bold mb-8">{t.contact}</h3>
           <p className="text-lg mb-8 max-w-2xl mx-auto">
-            لأي استفسارات أو طلبات، لا تتردد في التواصل معنا عبر الطرق التالية:
+            {currentLanguage === 'ar' ? 'لأي استفسارات أو طلبات، لا تتردد في التواصل معنا عبر الطرق التالية:' :
+             currentLanguage === 'fr' ? 'Pour toute question ou demande, n\'hésitez pas à nous contacter par les moyens suivants :' :
+             'For any inquiries or requests, feel free to contact us through the following methods:'}
           </p>
           <div className="flex flex-wrap justify-center gap-8">
             {contactMethods.map((method, index) => (
@@ -761,7 +842,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 px-4">
         <div className="container mx-auto text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Denima__hub. جميع الحقوق محفوظة.</p>
+          <p>&copy; {new Date().getFullYear()} Denima__hub. {currentLanguage === 'ar' ? 'جميع الحقوق محفوظة.' : currentLanguage === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
         </div>
       </footer>
 
