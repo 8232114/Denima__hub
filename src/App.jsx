@@ -13,7 +13,7 @@ import heroImage from './assets/hero_image.png'
 import denimaHubLogo from './assets/denima_hub_logo.png'
 import './App.css'
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://lnh8imcdw5md.manus.space/api' : 'http://localhost:5000/api'
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api'
 
 function App() {
   const [services, setServices] = useState([])
