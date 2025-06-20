@@ -107,14 +107,14 @@ const DigitalProducts = () => {
 
   const getIconComponent = (iconName) => {
     switch (iconName) {
-      case 'Monitor': return '📺';
+      case 'Monitor': return <img src={fullWebsiteIcon} alt="Monitor" className="w-8 h-8" />;
       case 'Headphones': return '🎧';
       case 'Gamepad2': return '🎮';
       case 'PersonalWebsite': return <img src={personalWebsiteIcon} alt="Personal Website" className="w-8 h-8" />;
       case 'BusinessWebsite': return <img src={businessWebsiteIcon} alt="Business Website" className="w-8 h-8" />;
       case 'FullWebsite': return <img src={fullWebsiteIcon} alt="Full Website" className="w-8 h-8" />;
-      case 'ECommerce': return '🛒';
-      case 'Portfolio': return '💼';
+      case 'ECommerce': return <img src={businessWebsiteIcon} alt="E-Commerce" className="w-8 h-8" />;
+      case 'Portfolio': return <img src={personalWebsiteIcon} alt="Portfolio" className="w-8 h-8" />;
       case 'Blog': return '📝';
       case 'Corporate': return '🏢';
       case 'Restaurant': return '🍽️';
