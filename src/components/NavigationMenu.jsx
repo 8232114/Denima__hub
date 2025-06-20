@@ -30,12 +30,6 @@ const NavigationMenu = ({ isOpen, onClose, currentLanguage, t, isAdmin, onAdminA
       id: 'web-design', 
       label: currentLanguage === 'ar' ? 'تصميم المواقع' : 'Web Design', 
       icon: Monitor, 
-      action: 'scrollToWebDesign' 
-    },
-    { 
-      id: 'digital-products', 
-      label: currentLanguage === 'ar' ? 'المنتجات الرقمية' : 'Digital Products', 
-      icon: Smartphone, 
       path: '/digital-products' 
     }
   ];

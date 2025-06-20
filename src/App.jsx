@@ -586,7 +586,7 @@ function HomePage() {
                 onClick={() => window.location.href = '/digital-products'}
                 className="text-gray-700 hover:text-purple-600"
               >
-                المنتجات الرقمية
+                تصميم المواقع
               </Button>
             </div>
 

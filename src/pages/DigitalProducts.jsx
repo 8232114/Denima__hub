@@ -270,7 +270,7 @@ const DigitalProducts = () => {
               <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">D</span>
               </div>
-              <h1 className="text-xl font-bold text-gray-800">المنتجات الرقمية</h1>
+              <h1 className="text-xl font-bold text-gray-800">تصميم المواقع</h1>
             </div>
           </div>
         </div>
@@ -281,10 +281,10 @@ const DigitalProducts = () => {
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            المنتجات الرقمية المميزة
+            خدمات تصميم المواقع المميزة
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            اكتشف مجموعة واسعة من الحسابات المميزة والمنتجات الرقمية بأسعار تنافسية
+            اكتشف مجموعة واسعة من خدمات تصميم المواقع الاحترافية بأسعار تنافسية
           </p>
           <div className="mt-4">
             <p className="text-sm text-gray-500 mb-2">
