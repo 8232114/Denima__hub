@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
@@ -10,13 +11,16 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from '@/components/ui/label.jsx'
 import OffersSection from './components/OffersSection.jsx'
 import OfferManagement from './components/OfferManagement.jsx'
+import NavigationMenu from './components/NavigationMenu.jsx'
+import DigitalProducts from './pages/DigitalProducts.jsx'
 import heroImage from './assets/hero_image.png'
 import denimaHubLogo from './assets/denima_hub_logo.png'
 import './App.css'
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api'
 
-function App() {
+// Home Page Component
+function HomePage() {
   const [services, setServices] = useState([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('admin_token'))
@@ -554,8 +558,40 @@ function App() {
               </div>
             </div>
             
+            {/* Desktop Navigation Menu */}
+            <div className="hidden lg:flex items-center gap-6">
+              <Button
+                variant="ghost"
+                onClick={() => document.getElementById('offers-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-gray-700 hover:text-purple-600"
+              >
+                العروض الخاصة
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-gray-700 hover:text-purple-600"
+              >
+                خدمات الترفيه
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => document.getElementById('web-design-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-gray-700 hover:text-purple-600"
+              >
+                تصميم المواقع
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => window.location.href = '/digital-products'}
+                className="text-gray-700 hover:text-purple-600"
+              >
+                المنتجات الرقمية
+              </Button>
+            </div>
+
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               {/* Language Toggle */}
               <Button
                 variant="outline"
@@ -618,7 +654,7 @@ function App() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="flex lg:hidden items-center gap-2">
               {/* Mobile Language Toggle */}
               <Button
                 variant="outline"
@@ -640,83 +676,38 @@ function App() {
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 border-t pt-4 bg-white relative z-40 shadow-lg rounded-lg">
-              <div className="flex flex-col gap-3 p-4">
-                {/* Prominent Order Button for Mobile */}
-                <Button 
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold w-full"
-                  onClick={() => {
-                    scrollToContact()
-                    setMobileMenuOpen(false)
-                  }}
-                >
-                  <ShoppingCart className="w-4 h-4 ml-2" />
-                  {t.orderNow}
-                </Button>
-
-                {isAdmin ? (
-                  <>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        setShowChangePassword(true)
-                        setMobileMenuOpen(false)
-                      }}
-                      className="w-full"
-                    >
-                      تغيير كلمة المرور
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        setShowAddService(true)
-                        setMobileMenuOpen(false)
-                      }}
-                      className="w-full"
-                    >
-                      <Plus className="w-4 h-4 ml-2" />
-                      إضافة خدمة
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        setShowOfferManagement(true)
-                        setMobileMenuOpen(false)
-                      }}
-                      className="w-full"
-                    >
-                      <Edit className="w-4 h-4 ml-2" />
-                      إدارة العروض
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        handleLogout()
-                        setMobileMenuOpen(false)
-                      }}
-                      className="w-full"
-                    >
-                      تسجيل خروج
-                    </Button>
-                  </>
-                ) : (
-                  <Button 
-                    variant="outline"
-                    onClick={() => {
-                      setShowLogin(true)
-                      setMobileMenuOpen(false)
-                    }}
-                    className="w-full"
-                  >
-                    <LogIn className="w-4 h-4 ml-2" />
-                    {t.adminLogin}
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
+          {/* Navigation Menu */}
+          <NavigationMenu 
+            isOpen={mobileMenuOpen}
+            onClose={() => setMobileMenuOpen(false)}
+            currentLanguage={currentLanguage}
+            t={t}
+            isAdmin={isAdmin}
+            onAdminAction={(action) => {
+              switch(action) {
+                case 'scrollToOffers':
+                  document.getElementById('offers-section')?.scrollIntoView({ behavior: 'smooth' });
+                  break;
+                case 'scrollToServices':
+                  document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
+                  break;
+                case 'scrollToWebDesign':
+                  document.getElementById('web-design-section')?.scrollIntoView({ behavior: 'smooth' });
+                  break;
+                case 'scrollToContact':
+                  scrollToContact();
+                  break;
+                case 'showAddService':
+                  setShowAddService(true);
+                  break;
+                case 'showOfferManagement':
+                  setShowOfferManagement(true);
+                  break;
+                default:
+                  break;
+              }
+            }}
+          />
         </div>
       </header>
 
@@ -749,7 +740,7 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 px-4 bg-gray-100">
+      <section id="services-section" className="py-16 px-4 bg-gray-100">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
             {t.services}
@@ -827,10 +818,12 @@ function App() {
       </section>
 
       {/* Offers Section */}
-      <OffersSection services={services} API_BASE_URL={API_BASE_URL} currentLanguage={currentLanguage} t={t} />
+      <div id="offers-section">
+        <OffersSection services={services} API_BASE_URL={API_BASE_URL} currentLanguage={currentLanguage} t={t} />
+      </div>
 
       {/* Why Choose Us Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
+      <section id="web-design-section" className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
             {t.whyChoose}
@@ -1136,6 +1129,18 @@ function App() {
       </Dialog>
     </div>
   )
+}
+
+// Main App Component with Router
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/digital-products" element={<DigitalProducts />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
