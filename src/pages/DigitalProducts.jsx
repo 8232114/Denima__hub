@@ -48,23 +48,31 @@ const DigitalProducts = () => {
           'Content-Type': 'application/json'
         }
       });
+
       console.log('Token verification response status:', response.status);
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log('Token verification data:', data);
-        setIsAdmin(data.user.is_admin);
+        setIsAdmin(data.user?.is_admin || false);
       } else {
-        console.log('Token verification failed, removing token');
+        console.error('Token verification failed:', response.status);
+        // Clear invalid token and force re-login
         localStorage.removeItem('admin_token');
         setToken(null);
         setIsAdmin(false);
+        
+        // Show alert to inform user they need to login again
+        alert('انتهت صلاحية جلسة تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى.');
       }
     } catch (error) {
       console.error('Error verifying token:', error);
+      // Clear token on error and force re-login
       localStorage.removeItem('admin_token');
       setToken(null);
       setIsAdmin(false);
+      
+      alert('خطأ في التحقق من صلاحية تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى.');
     }
   };
 
