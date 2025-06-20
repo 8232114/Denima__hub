@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Star, ShoppingCart, Plus, Edit, Trash2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 const DigitalProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('admin_token'));
+  const [showAddEditProduct, setShowAddEditProduct] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [productForm, setProductForm] = useState({
+    name: '',
+    description: '',
+    price: '',
+    original_price: '',
+    category: '',
+    icon: '',
+    features: [''],
+    rating: 4.5,
+  });
 
   const API_BASE_URL = process.env.NODE_ENV === 'production' 
     ? 'https://web-production-e7d36.up.railway.app/api' 
@@ -14,7 +33,32 @@ const DigitalProducts = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+    if (token) {
+      verifyToken();
+    }
+  }, [token]);
+
+  const verifyToken = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIsAdmin(data.user.is_admin);
+      } else {
+        localStorage.removeItem('admin_token');
+        setToken(null);
+        setIsAdmin(false);
+      }
+    } catch (error) {
+      console.error('Error verifying token:', error);
+    }
+  };
 
   const fetchProducts = async () => {
     try {
@@ -29,42 +73,7 @@ const DigitalProducts = () => {
       }
     } catch (err) {
       console.error('Error fetching products:', err);
-      // Use fallback data if API fails
-      setProducts([
-        {
-          id: 1,
-          name: 'Netflix Premium',
-          description: 'حساب Netflix مميز لمدة شهر كامل مع إمكانية المشاهدة بجودة 4K',
-          price: '$15',
-          original_price: '$25',
-          category: 'streaming',
-          icon: 'Monitor',
-          features: ['جودة 4K', 'مشاهدة على 4 أجهزة', 'محتوى حصري', 'بدون إعلانات'],
-          rating: 4.9
-        },
-        {
-          id: 2,
-          name: 'Spotify Premium',
-          description: 'استمتع بالموسيقى بدون إعلانات مع جودة عالية',
-          price: '$12',
-          original_price: '$20',
-          category: 'music',
-          icon: 'Headphones',
-          features: ['بدون إعلانات', 'جودة عالية', 'تحميل للاستماع بدون إنترنت', 'قوائم تشغيل مخصصة'],
-          rating: 4.8
-        },
-        {
-          id: 3,
-          name: 'PlayStation Plus',
-          description: 'اشتراك PlayStation Plus مع ألعاب مجانية شهرية',
-          price: '$20',
-          original_price: '$30',
-          category: 'gaming',
-          icon: 'Gamepad2',
-          features: ['ألعاب مجانية شهرية', 'خصومات حصرية', 'لعب أونلاين', 'تخزين سحابي'],
-          rating: 4.7
-        }
-      ]);
+      setProducts([]); // Fallback to empty array on error
     } finally {
       setLoading(false);
     }
@@ -78,27 +87,112 @@ const DigitalProducts = () => {
 
   const getIconComponent = (iconName) => {
     switch (iconName) {
-      case 'Monitor':
-        return '📺';
-      case 'Headphones':
-        return '🎧';
-      case 'Gamepad2':
-        return '🎮';
-      default:
-        return '📱';
+      case 'Monitor': return '📺';
+      case 'Headphones': return '🎧';
+      case 'Gamepad2': return '🎮';
+      default: return '📱';
     }
   };
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'streaming':
-        return 'from-red-500 to-pink-500';
-      case 'music':
-        return 'from-green-500 to-teal-500';
-      case 'gaming':
-        return 'from-blue-500 to-purple-500';
-      default:
-        return 'from-purple-500 to-blue-500';
+      case 'streaming': return 'from-red-500 to-pink-500';
+      case 'music': return 'from-green-500 to-teal-500';
+      case 'gaming': return 'from-blue-500 to-purple-500';
+      default: return 'from-purple-500 to-blue-500';
+    }
+  };
+
+  const handleAddProductClick = () => {
+    setEditingProduct(null);
+    setProductForm({
+      name: '', description: '', price: '', original_price: '',
+      category: '', icon: '', features: [''], rating: 4.5,
+    });
+    setShowAddEditProduct(true);
+  };
+
+  const handleEditProductClick = (product) => {
+    setEditingProduct(product);
+    setProductForm({
+      name: product.name, description: product.description, price: product.price,
+      original_price: product.original_price || '', category: product.category,
+      icon: product.icon, features: product.features || [''], rating: product.rating,
+    });
+    setShowAddEditProduct(true);
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    if (window.confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/digital-products/${productId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (response.ok) {
+          fetchProducts();
+        } else {
+          alert('فشل حذف المنتج');
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('خطأ في الاتصال');
+      }
+    }
+  };
+
+  const handleProductFormChange = (e) => {
+    const { name, value } = e.target;
+    setProductForm(prev => ({
+      ...prev, [name]: value
+    }));
+  };
+
+  const handleFeatureChange = (index, value) => {
+    const newFeatures = [...productForm.features];
+    newFeatures[index] = value;
+    setProductForm(prev => ({ ...prev, features: newFeatures }));
+  };
+
+  const addFeatureField = () => {
+    setProductForm(prev => ({ ...prev, features: [...prev.features, ''] }));
+  };
+
+  const removeFeatureField = (index) => {
+    const newFeatures = productForm.features.filter((_, i) => i !== index);
+    setProductForm(prev => ({ ...prev, features: newFeatures }));
+  };
+
+  const handleSubmitProduct = async (e) => {
+    e.preventDefault();
+    const method = editingProduct ? 'PUT' : 'POST';
+    const url = editingProduct 
+      ? `${API_BASE_URL}/digital-products/${editingProduct.id}` 
+      : `${API_BASE_URL}/digital-products`;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...productForm,
+          features: productForm.features.filter(f => f.trim() !== ''),
+        }),
+      });
+
+      if (response.ok) {
+        fetchProducts();
+        setShowAddEditProduct(false);
+      } else {
+        const errData = await response.json();
+        alert(`فشل ${editingProduct ? 'تحديث' : 'إضافة'} المنتج: ${errData.message || response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Error ${editingProduct ? 'updating' : 'adding'} product:`, error);
+      alert('خطأ في الاتصال');
     }
   };
 
@@ -146,6 +240,11 @@ const DigitalProducts = () => {
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             اكتشف مجموعة واسعة من الحسابات المميزة والمنتجات الرقمية بأسعار تنافسية
           </p>
+          {isAdmin && (
+            <Button onClick={handleAddProductClick} className="mt-4 bg-purple-600 hover:bg-purple-700 text-white">
+              <Plus className="w-5 h-5 ml-2" /> إضافة منتج جديد
+            </Button>
+          )}
         </div>
 
         {/* Products Grid */}
@@ -225,6 +324,17 @@ const DigitalProducts = () => {
                       {products.findIndex(p => p.id === product.id) + 1}
                     </span>
                   </button>
+
+                  {isAdmin && (
+                    <div className="flex justify-center mt-4 space-x-2">
+                      <Button onClick={() => handleEditProductClick(product)} variant="outline" size="sm">
+                        <Edit className="w-4 h-4 ml-1" /> تعديل
+                      </Button>
+                      <Button onClick={() => handleDeleteProduct(product.id)} variant="destructive" size="sm">
+                        <Trash2 className="w-4 h-4 ml-1" /> حذف
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -251,9 +361,74 @@ const DigitalProducts = () => {
           </button>
         </div>
       </main>
+
+      {/* Add/Edit Product Dialog */}
+      <Dialog open={showAddEditProduct} onOpenChange={setShowAddEditProduct}>
+        <DialogContent className="sm:max-w-[425px]" dir="rtl">
+          <DialogHeader>
+            <DialogTitle>{editingProduct ? 'تعديل المنتج الرقمي' : 'إضافة منتج رقمي جديد'}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmitProduct} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">الاسم</Label>
+              <Input id="name" name="name" value={productForm.name} onChange={handleProductFormChange} className="col-span-3" required />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">الوصف</Label>
+              <Textarea id="description" name="description" value={productForm.description} onChange={handleProductFormChange} className="col-span-3" required />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="price" className="text-right">السعر</Label>
+              <Input id="price" name="price" value={productForm.price} onChange={handleProductFormChange} className="col-span-3" required />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="original_price" className="text-right">السعر الأصلي (اختياري)</Label>
+              <Input id="original_price" name="original_price" value={productForm.original_price} onChange={handleProductFormChange} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">الفئة</Label>
+              <Input id="category" name="category" value={productForm.category} onChange={handleProductFormChange} className="col-span-3" required />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="icon" className="text-right">الأيقونة (Monitor, Headphones, Gamepad2)</Label>
+              <Input id="icon" name="icon" value={productForm.icon} onChange={handleProductFormChange} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="rating" className="text-right">التقييم (1-5)</Label>
+              <Input id="rating" name="rating" type="number" step="0.1" min="1" max="5" value={productForm.rating} onChange={handleProductFormChange} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label className="text-right">الميزات</Label>
+              <div className="col-span-3 space-y-2">
+                {productForm.features.map((feature, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <Input
+                      value={feature}
+                      onChange={(e) => handleFeatureChange(index, e.target.value)}
+                      placeholder="ميزة المنتج"
+                    />
+                    {productForm.features.length > 1 && (
+                      <Button type="button" variant="outline" size="icon" onClick={() => removeFeatureField(index)}>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                ))}
+                <Button type="button" variant="outline" size="sm" onClick={addFeatureField}>
+                  <Plus className="h-4 w-4 ml-1" /> إضافة ميزة
+                </Button>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">{editingProduct ? 'حفظ التغييرات' : 'إضافة المنتج'}</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
 export default DigitalProducts;
+
 
