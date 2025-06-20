@@ -576,13 +576,6 @@ function HomePage() {
               </Button>
               <Button
                 variant="ghost"
-                onClick={() => document.getElementById('web-design-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-gray-700 hover:text-purple-600"
-              >
-                تصميم المواقع
-              </Button>
-              <Button
-                variant="ghost"
                 onClick={() => window.location.href = '/digital-products'}
                 className="text-gray-700 hover:text-purple-600"
               >
