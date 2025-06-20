@@ -40,6 +40,7 @@ const DigitalProducts = () => {
 
   const verifyToken = async () => {
     try {
+      console.log('Verifying token:', token ? 'Token exists' : 'No token');
       const response = await fetch(`${API_BASE_URL}/auth/verify`, {
         method: 'POST',
         headers: {
@@ -47,16 +48,23 @@ const DigitalProducts = () => {
           'Content-Type': 'application/json'
         }
       });
+      console.log('Token verification response status:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Token verification data:', data);
         setIsAdmin(data.user.is_admin);
       } else {
+        console.log('Token verification failed, removing token');
         localStorage.removeItem('admin_token');
         setToken(null);
         setIsAdmin(false);
       }
     } catch (error) {
       console.error('Error verifying token:', error);
+      localStorage.removeItem('admin_token');
+      setToken(null);
+      setIsAdmin(false);
     }
   };
 
@@ -171,6 +179,16 @@ const DigitalProducts = () => {
       : `${API_BASE_URL}/digital-products`;
 
     try {
+      console.log('Submitting product:', {
+        method,
+        url,
+        token: token ? 'Token exists' : 'No token',
+        data: {
+          ...productForm,
+          features: productForm.features.filter(f => f.trim() !== ''),
+        }
+      });
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -183,16 +201,23 @@ const DigitalProducts = () => {
         }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
       if (response.ok) {
+        const successData = await response.json();
+        console.log('Success response:', successData);
+        alert(`تم ${editingProduct ? 'تحديث' : 'إضافة'} المنتج بنجاح!`);
         fetchProducts();
         setShowAddEditProduct(false);
       } else {
-        const errData = await response.json();
+        const errData = await response.json().catch(() => ({ message: 'خطأ غير معروف' }));
+        console.error('Error response:', errData);
         alert(`فشل ${editingProduct ? 'تحديث' : 'إضافة'} المنتج: ${errData.message || response.statusText}`);
       }
     } catch (error) {
       console.error(`Error ${editingProduct ? 'updating' : 'adding'} product:`, error);
-      alert('خطأ في الاتصال');
+      alert(`خطأ في الاتصال: ${error.message}`);
     }
   };
 
@@ -240,11 +265,23 @@ const DigitalProducts = () => {
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             اكتشف مجموعة واسعة من الحسابات المميزة والمنتجات الرقمية بأسعار تنافسية
           </p>
-          {isAdmin && (
-            <Button onClick={handleAddProductClick} className="mt-4 bg-purple-600 hover:bg-purple-700 text-white">
-              <Plus className="w-5 h-5 ml-2" /> إضافة منتج جديد
-            </Button>
-          )}
+          <div className="mt-4">
+            <p className="text-sm text-gray-500 mb-2">
+              حالة المدير: {isAdmin ? 'مدير مسجل' : 'غير مسجل كمدير'} | 
+              الرمز المميز: {token ? 'موجود' : 'غير موجود'}
+            </p>
+            {isAdmin && (
+              <Button onClick={handleAddProductClick} className="bg-purple-600 hover:bg-purple-700 text-white">
+                <Plus className="w-5 h-5 ml-2" /> إضافة منتج جديد
+              </Button>
+            )}
+            {!isAdmin && token && (
+              <p className="text-red-500 text-sm">لا تملك صلاحيات المدير</p>
+            )}
+            {!token && (
+              <p className="text-yellow-500 text-sm">يجب تسجيل الدخول كمدير لإضافة المنتجات</p>
+            )}
+          </div>
         </div>
 
         {/* Products Grid */}
