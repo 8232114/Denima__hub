@@ -1,0 +1,7 @@
+# Sitemap
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://denima-hub.netlify.app/sitemap.xml
+

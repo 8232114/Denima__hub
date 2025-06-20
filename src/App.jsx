@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
@@ -531,6 +532,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
+      <Helmet>
+        <title>Denima Hub - منصة التجارة الإلكترونية الرائدة</title>
+        <meta name="description" content="Denima Hub هي منصة التجارة الإلكترونية الرائدة التي تقدم أفضل المنتجات والخدمات بأسعار تنافسية. تسوق الآن واستمتع بتجربة تسوق فريدة." />
+        <meta name="keywords" content="تجارة إلكترونية, تسوق أونلاين, منتجات, خدمات, Denima Hub, دنيما هب" />
+        <meta property="og:title" content="Denima Hub - منصة التجارة الإلكترونية الرائدة" />
+        <meta property="og:description" content="Denima Hub هي منصة التجارة الإلكترونية الرائدة التي تقدم أفضل المنتجات والخدمات بأسعار تنافسية." />
+        <meta property="og:image" content="https://denima-hub.netlify.app/favicon.png" />
+        <meta property="og:url" content="https://denima-hub.netlify.app" />
+        <link rel="canonical" href="https://denima-hub.netlify.app" />
+      </Helmet>
+      
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
