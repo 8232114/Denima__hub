@@ -291,6 +291,23 @@ const DigitalProducts = () => {
               حالة المدير: {isAdmin ? 'مدير مسجل' : 'غير مسجل كمدير'} | 
               الرمز المميز: {token ? 'موجود' : 'غير موجود'}
             </p>
+            {token && (
+              <div className="mb-4">
+                <Button 
+                  onClick={() => {
+                    localStorage.removeItem('admin_token');
+                    setToken(null);
+                    setIsAdmin(false);
+                    alert('تم مسح الرمز المميز. يرجى تسجيل الدخول مرة أخرى.');
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="mb-2"
+                >
+                  مسح الرمز المميز وإعادة تسجيل الدخول
+                </Button>
+              </div>
+            )}
             {isAdmin && (
               <Button onClick={handleAddProductClick} className="bg-purple-600 hover:bg-purple-700 text-white">
                 <Plus className="w-5 h-5 ml-2" /> إضافة منتج جديد
