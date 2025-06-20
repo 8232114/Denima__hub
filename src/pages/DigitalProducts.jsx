@@ -783,7 +783,44 @@ const DigitalProducts = () => {
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="icon" className="text-right">الأيقونة (Monitor, Headphones, Gamepad2)</Label>
-              <Input id="icon" name="icon" value={productForm.icon} onChange={handleProductFormChange} className="col-span-3" />
+              <select id="icon" name="icon" value={productForm.icon} onChange={handleProductFormChange} className="col-span-3 p-2 border rounded-md">
+                <option value="">اختر أيقونة</option>
+                <option value="Monitor">📺 Monitor</option>
+                <option value="Headphones">🎧 Headphones</option>
+                <option value="Gamepad2">🎮 Gamepad2</option>
+                <option value="PersonalWebsite">👨‍💼 موقع شخصي احترافي</option>
+                <option value="BusinessWebsite">🏪 موقع تجاري</option>
+                <option value="FullWebsite">🌐 موقع إلكتروني كامل</option>
+                <option value="ECommerce">🛒 متجر إلكتروني</option>
+                <option value="Portfolio">💼 معرض أعمال</option>
+                <option value="Blog">📝 مدونة</option>
+                <option value="Corporate">🏢 موقع شركة</option>
+                <option value="Restaurant">🍽️ مطعم</option>
+                <option value="Medical">🏥 طبي</option>
+                <option value="Education">🎓 تعليمي</option>
+                <option value="RealEstate">🏠 عقارات</option>
+                <option value="Fashion">👗 أزياء</option>
+                <option value="Technology">💻 تقنية</option>
+                <option value="Travel">✈️ سفر</option>
+                <option value="Fitness">💪 لياقة بدنية</option>
+                <option value="Photography">📸 تصوير</option>
+                <option value="Music">🎵 موسيقى</option>
+                <option value="News">📰 أخبار</option>
+                <option value="Sports">⚽ رياضة</option>
+                <option value="Food">🍕 طعام</option>
+                <option value="Beauty">💄 جمال</option>
+                <option value="Automotive">🚗 سيارات</option>
+                <option value="Finance">💰 مالية</option>
+                <option value="Legal">⚖️ قانونية</option>
+                <option value="Consulting">📊 استشارات</option>
+                <option value="NonProfit">🤝 منظمات غير ربحية</option>
+                <option value="Event">🎉 فعاليات</option>
+                <option value="Wedding">💒 أفراح</option>
+                <option value="Pet">🐾 حيوانات أليفة</option>
+                <option value="Gaming">🎯 ألعاب</option>
+                <option value="Art">🎨 فن</option>
+                <option value="Craft">🛠️ حرف يدوية</option>
+              </select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="rating" className="text-right">التقييم (1-5)</Label>
