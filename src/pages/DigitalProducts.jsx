@@ -211,13 +211,26 @@ const DigitalProducts = () => {
         fetchProducts();
         setShowAddEditProduct(false);
       } else {
-        const errData = await response.json().catch(() => ({ message: 'خطأ غير معروف' }));
-        console.error('Error response:', errData);
-        alert(`فشل ${editingProduct ? 'تحديث' : 'إضافة'} المنتج: ${errData.message || response.statusText}`);
+        // Get the full error response
+        const responseText = await response.text();
+        console.error('Error response text:', responseText);
+        
+        let errData;
+        try {
+          errData = JSON.parse(responseText);
+        } catch (parseError) {
+          errData = { message: responseText || 'خطأ غير معروف' };
+        }
+        
+        console.error('Parsed error response:', errData);
+        
+        // Show detailed error message
+        const errorMessage = errData.message || `خطأ ${response.status}: ${response.statusText}`;
+        alert(`فشل ${editingProduct ? 'تحديث' : 'إضافة'} المنتج:\n\nالخطأ: ${errorMessage}\n\nكود الخطأ: ${response.status}\n\nالاستجابة الكاملة: ${responseText}`);
       }
     } catch (error) {
       console.error(`Error ${editingProduct ? 'updating' : 'adding'} product:`, error);
-      alert(`خطأ في الاتصال: ${error.message}`);
+      alert(`خطأ في الاتصال: ${error.message}\n\nتفاصيل الخطأ: ${error.stack || 'غير متوفرة'}`);
     }
   };
 
