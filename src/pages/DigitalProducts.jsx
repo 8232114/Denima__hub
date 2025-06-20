@@ -7,6 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
+import personalWebsiteIcon from "../assets/icons/personal_website_icon.png";
+import businessWebsiteIcon from "../assets/icons/business_website_icon.png";
+import fullWebsiteIcon from "../assets/icons/full_website_icon.png";
+
 const DigitalProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -106,9 +110,9 @@ const DigitalProducts = () => {
       case 'Monitor': return '📺';
       case 'Headphones': return '🎧';
       case 'Gamepad2': return '🎮';
-      case 'PersonalWebsite': return '👨‍💼';
-      case 'BusinessWebsite': return '🏪';
-      case 'FullWebsite': return '🌐';
+      case 'PersonalWebsite': return <img src={personalWebsiteIcon} alt="Personal Website" className="w-8 h-8" />;
+      case 'BusinessWebsite': return <img src={businessWebsiteIcon} alt="Business Website" className="w-8 h-8" />;
+      case 'FullWebsite': return <img src={fullWebsiteIcon} alt="Full Website" className="w-8 h-8" />;
       case 'ECommerce': return '🛒';
       case 'Portfolio': return '💼';
       case 'Blog': return '📝';
