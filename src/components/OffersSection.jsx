@@ -114,8 +114,8 @@ const OffersSection = ({ services, API_BASE_URL, currentLanguage, t }) => {
                   {selectedProducts[index] ? (
                     <div className="flex items-center gap-3 md:gap-4 w-full">
                       <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 border border-gray-200">
-                        {selectedProducts[index].logo_url ? (
-                          <img src={`${API_BASE_URL}${selectedProducts[index].logo_url}`} alt={selectedProducts[index].name} className="w-full h-full object-cover" />
+                        {selectedProducts[index].icon ? (
+                          <img src={`${API_BASE_URL}/static/uploads/${selectedProducts[index].icon}.png`} alt={selectedProducts[index].name} className="w-full h-full object-cover" />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                             <span className="text-xs text-gray-500">{t.offers.noImage}</span>
@@ -187,12 +187,12 @@ const OffersSection = ({ services, API_BASE_URL, currentLanguage, t }) => {
                   <CardContent className="p-2 md:p-4">
                     <div className="flex flex-col items-center text-center space-y-2 md:space-y-3">
                       <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 md:p-2 border border-gray-200 bg-white">
-                        {product.logo_url ? (
+                        {product.icon ? (
                           <img 
-                            src={`${API_BASE_URL}${product.logo_url}`} 
+                            src={`${API_BASE_URL}/static/uploads/${product.icon}.png`} 
                             alt={product.name} 
                             className="w-full h-full object-contain"
-                          />
+                          />              />
                         ) : (
                           <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded">
                             <span className="text-lg md:text-2xl font-bold text-gray-400">
