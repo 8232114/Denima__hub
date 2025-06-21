@@ -275,7 +275,7 @@ const DigitalProducts = () => {
       case 'Turkmen': return '🍖';
       case 'Uzbek': return '🍖';
       case 'Russian': return '🍖';
-      case 'Ukrainian': return '🍖
+      case 'Ukrainian': return '🍖';
       case 'Belarusian': return '🍖';
       case 'Polish': return '🍖';
       case 'Czech': return '🍺';
