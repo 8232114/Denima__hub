@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu, Globe } from 'lucide-react'
+import { MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu, Globe, ShoppingCart } from 'lucide-react'
 import fullWebsiteIcon from './assets/icons/full_website_icon.png'
 import businessWebsiteIcon from './assets/icons/business_website_icon.png'
 import personalWebsiteIcon from './assets/icons/personal_website_icon.png'
@@ -1140,5 +1140,8 @@ function App() {
 }
 
 export default App
+
+
+
 
 
