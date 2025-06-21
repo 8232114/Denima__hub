@@ -115,7 +115,11 @@ const OffersSection = ({ services, API_BASE_URL, currentLanguage, t }) => {
                     <div className="flex items-center gap-3 md:gap-4 w-full">
                       <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden p-1 border border-gray-200">
                         {selectedProducts[index].icon ? (
-                          <img src={`${API_BASE_URL}/static/uploads/${selectedProducts[index].icon}.png`} alt={selectedProducts[index].name} className="w-full h-full object-cover" />
+                          <img 
+                            src={`${API_BASE_URL}/static/uploads/${selectedProducts[index].icon}.png`} 
+                            alt={selectedProducts[index].name} 
+                            className="w-full h-full object-cover"
+                          />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                             <span className="text-xs text-gray-500">{t.offers.noImage}</span>
