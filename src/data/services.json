@@ -12,7 +12,7 @@
     "name": "Netflix Premium",
     "original_price": "150",
     "price": "90",
-    "image_url": "/src/assets/icons/business_website_icon.png"
+    "image_url": "/icons/business_website_icon.png"
   },
   {
     "id": "Knc0IEZ5AJWdTfa1Bzb6g",
@@ -27,7 +27,7 @@
     "name": "Spotify Premium",
     "original_price": "120",
     "price": "90",
-    "image_url": "/src/assets/icons/full_website_icon.png"
+    "image_url": "/icons/full_website_icon.png"
   },
   {
     "id": "S2ngUFFAlKxhQLYz698M",
