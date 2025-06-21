@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, ShoppingCart, Plus, Edit, Trash2, X } from 'lucide-react';
+import { ArrowLeft, Star, ShoppingBag, Plus, Edit, Trash2, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -714,7 +714,7 @@ const DigitalProducts = () => {
                     onClick={() => handleWhatsAppOrder(product)}
                     className={`w-full bg-gradient-to-r ${getCategoryColor(product.category)} text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2`}
                   >
-                    <ShoppingCart className="w-5 h-5" />
+                    <ShoppingBag className="w-5 h-5" />
                     اطلب الآن عبر واتساب
                     <span className="bg-white/20 text-sm px-2 py-1 rounded-full mr-2">
                       {products.findIndex(p => p.id === product.id) + 1}
