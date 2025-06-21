@@ -192,7 +192,7 @@ const OffersSection = ({ services, API_BASE_URL, currentLanguage, t }) => {
                             src={`${API_BASE_URL}/static/uploads/${product.icon}.png`} 
                             alt={product.name} 
                             className="w-full h-full object-contain"
-                          />              />
+                          />
                         ) : (
                           <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded">
                             <span className="text-lg md:text-2xl font-bold text-gray-400">
