@@ -49,7 +49,7 @@ const MarketplaceAuth = ({ isOpen, onClose, onLoginSuccess }) => {
         onClose();
         setLoginForm({ username: '', password: '' });
       } else {
-        setError(data.message || 'فشل في تسجيل الدخول');
+        setError(data.error || 'فشل في تسجيل الدخول');
       }
     } catch (error) {
       setError('حدث خطأ في الاتصال');
@@ -91,7 +91,7 @@ const MarketplaceAuth = ({ isOpen, onClose, onLoginSuccess }) => {
         onClose();
         setRegisterForm({ username: '', email: '', password: '', confirmPassword: '' });
       } else {
-        setError(data.message || 'فشل في إنشاء الحساب');
+        setError(data.error || 'فشل في إنشاء الحساب');
       }
     } catch (error) {
       setError('حدث خطأ في الاتصال');
