@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Plus, ShoppingCart, Package, ArrowRight, Store, TrendingUp } from 'lucide-react';
+import { Plus, ShoppingCart, Package, ArrowRight, Store, TrendingUp, Shield } from 'lucide-react';
 
 const MarketplaceDashboard = ({ user, token }) => {
   const navigate = useNavigate();
@@ -18,14 +18,38 @@ const MarketplaceDashboard = ({ user, token }) => {
 
   const fetchStats = async () => {
     try {
-      // يمكن إضافة API calls هنا لجلب الإحصائيات
-      setStats({
-        totalProducts: 150,
-        myProducts: 5,
-        recentProducts: 12
+      const response = await fetch('https://denima-api-backend-production.up.railway.app/api/products/stats', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        setStats({
+          totalProducts: data.totalProducts || 0,
+          myProducts: data.myProducts || 0,
+          recentProducts: data.recentProducts || 0
+        });
+      } else {
+        console.error('Failed to fetch stats:', response.status);
+        // استخدام قيم افتراضية في حالة الخطأ
+        setStats({
+          totalProducts: 0,
+          myProducts: 0,
+          recentProducts: 0
+        });
+      }
     } catch (error) {
       console.error('Error fetching stats:', error);
+      // استخدام قيم افتراضية في حالة الخطأ
+      setStats({
+        totalProducts: 0,
+        myProducts: 0,
+        recentProducts: 0
+      });
     }
   };
 
@@ -57,14 +81,26 @@ const MarketplaceDashboard = ({ user, token }) => {
                   مرحبًا بك {user?.username}، اختر ما تريد فعله في السوق
                 </p>
               </div>
-              <Button
-                onClick={() => navigate('/')}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <ArrowRight className="w-4 h-4" />
-                العودة للرئيسية
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => navigate('/')}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                  العودة للرئيسية
+                </Button>
+                {user?.is_admin && (
+                  <Button
+                    onClick={() => navigate('/marketplace/admin')}
+                    variant="default"
+                    className="flex items-center gap-2 bg-red-600 hover:bg-red-700"
+                  >
+                    <Shield className="w-4 h-4" />
+                    لوحة المسؤول
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -20,6 +20,7 @@ import AddProduct from './pages/AddProduct.jsx'
 import BrowseProducts from './pages/BrowseProducts.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import MyProducts from './pages/MyProducts.jsx'
+import AdminDashboard from './pages/AdminDashboard.jsx';
 import heroImage from './assets/hero_image.png'
 import denimaHubLogo from './assets/denima_hub_logo.png'
 import './App.css'
@@ -1255,6 +1256,16 @@ function App() {
           element={
             marketplaceUser ? (
               <MyProducts user={marketplaceUser} token={marketplaceToken} />
+            ) : (
+              <HomePage />
+            )
+          } 
+        />
+        <Route 
+          path="/marketplace/admin" 
+          element={
+            marketplaceUser && marketplaceUser.is_admin ? (
+              <AdminDashboard user={marketplaceUser} token={marketplaceToken} />
             ) : (
               <HomePage />
             )

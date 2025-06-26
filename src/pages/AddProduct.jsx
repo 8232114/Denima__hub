@@ -43,6 +43,24 @@ const AddProduct = ({ user, token }) => {
       return;
     }
 
+    // التحقق من حجم الملفات
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    const invalidFiles = files.filter(file => file.size > maxSize);
+    
+    if (invalidFiles.length > 0) {
+      setError(`بعض الملفات كبيرة جداً. الحد الأقصى 10MB لكل صورة`);
+      return;
+    }
+
+    // التحقق من نوع الملفات
+    const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp'];
+    const invalidTypes = files.filter(file => !allowedTypes.includes(file.type));
+    
+    if (invalidTypes.length > 0) {
+      setError('نوع ملف غير مدعوم. يُسمح فقط بـ PNG, JPG, JPEG, GIF, WEBP');
+      return;
+    }
+
     const newImages = [...selectedImages, ...files];
     setSelectedImages(newImages);
 
@@ -59,6 +77,9 @@ const AddProduct = ({ user, token }) => {
       };
       reader.readAsDataURL(file);
     });
+    
+    // مسح رسالة الخطأ إذا كانت موجودة
+    setError('');
   };
 
   const removeImage = (index) => {
@@ -97,25 +118,40 @@ const AddProduct = ({ user, token }) => {
       if (selectedImages.length > 0) {
         setUploadingImages(true);
         
-        for (const image of selectedImages) {
+        const uploadErrors = [];
+        
+        for (let i = 0; i < selectedImages.length; i++) {
+          const image = selectedImages[i];
           const formData = new FormData();
           formData.append('image', image);
 
-          const imageResponse = await fetch(`${API_BASE_URL}/products/${productId}/images`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
-            body: formData
-          });
+          try {
+            const imageResponse = await fetch(`${API_BASE_URL}/products/${productId}/images`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              },
+              body: formData
+            });
 
-          if (!imageResponse.ok) {
-            console.error('فشل في رفع إحدى الصور');
+            const imageData = await imageResponse.json();
+
+            if (!imageResponse.ok) {
+              uploadErrors.push(`الصورة ${i + 1}: ${imageData.message || 'فشل في الرفع'}`);
+            }
+          } catch (error) {
+            uploadErrors.push(`الصورة ${i + 1}: خطأ في الاتصال`);
           }
         }
+        
+        if (uploadErrors.length > 0) {
+          setError(`تم إضافة المنتج ولكن فشل رفع بعض الصور:\n${uploadErrors.join('\n')}`);
+        } else {
+          setSuccess('تم إضافة المنتج وجميع الصور بنجاح!');
+        }
+      } else {
+        setSuccess('تم إضافة المنتج بنجاح!');
       }
-
-      setSuccess('تم إضافة المنتج بنجاح!');
       
       // إعادة تعيين النموذج
       setProductForm({
