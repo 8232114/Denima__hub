@@ -1159,6 +1159,32 @@ function HomePage() {
   )
 }
 
+// Marketplace Auth Page Component
+function MarketplaceAuthPage({ onLoginSuccess }) {
+  const [showAuth, setShowAuth] = useState(true)
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <img src={denimaHubLogo} alt="Denima Hub" className="w-24 h-24 mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-white mb-2">مرحباً بك في السوق</h1>
+          <p className="text-gray-300">سجل الدخول أو أنشئ حساباً جديداً للبدء في البيع والشراء</p>
+        </div>
+        
+        {showAuth && (
+          <MarketplaceAuth 
+            onLoginSuccess={(user, token) => {
+              setShowAuth(false)
+              onLoginSuccess(user, token)
+            }}
+          />
+        )}
+      </div>
+    </div>
+  )
+}
+
 // Main App Component with Router
 function App() {
   const [marketplaceUser, setMarketplaceUser] = useState(null)
@@ -1201,7 +1227,14 @@ function App() {
             marketplaceUser ? (
               <MarketplaceDashboard user={marketplaceUser} token={marketplaceToken} />
             ) : (
-              <HomePage />
+              <MarketplaceAuthPage 
+                onLoginSuccess={(user, token) => {
+                  setMarketplaceUser(user)
+                  setMarketplaceToken(token)
+                  localStorage.setItem('marketplace_user', JSON.stringify(user))
+                  localStorage.setItem('marketplace_token', token)
+                }}
+              />
             )
           } 
         />
