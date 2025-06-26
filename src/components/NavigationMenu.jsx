@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
-import { Home, Gift, Monitor, Smartphone, Plus, Edit, X, ShoppingCart } from 'lucide-react';
+import { Home, Gift, Monitor, Smartphone, Plus, Edit, X, ShoppingCart, Store } from 'lucide-react';
 
 // Navigation Menu Component
 const NavigationMenu = ({ isOpen, onClose, currentLanguage, t, isAdmin, onAdminAction }) => {
@@ -31,6 +31,12 @@ const NavigationMenu = ({ isOpen, onClose, currentLanguage, t, isAdmin, onAdminA
       label: currentLanguage === 'ar' ? 'تصميم المواقع' : 'Web Design', 
       icon: Monitor, 
       path: '/digital-products' 
+    },
+    { 
+      id: 'marketplace', 
+      label: currentLanguage === 'ar' ? 'السوق' : 'Marketplace', 
+      icon: Store, 
+      action: 'openMarketplace' 
     }
   ];
 
@@ -39,8 +45,12 @@ const NavigationMenu = ({ isOpen, onClose, currentLanguage, t, isAdmin, onAdminA
       // Navigate to different page
       onClose();
     } else if (item.action) {
-      // Scroll to section on current page
-      onAdminAction(item.action);
+      // Handle different actions
+      if (item.action === 'openMarketplace') {
+        onAdminAction('openMarketplace');
+      } else {
+        onAdminAction(item.action);
+      }
       onClose();
     }
   };

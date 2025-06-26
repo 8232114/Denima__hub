@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu, Globe, ShoppingCart, Star } from 'lucide-react'
+import { MessageCircle, Phone, Mail, Plus, Edit, Trash2, LogIn, Upload, X, Menu, Globe, ShoppingCart, Star, Store } from 'lucide-react'
 
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
@@ -13,7 +13,13 @@ import { Label } from '@/components/ui/label.jsx'
 import OffersSection from './components/OffersSection.jsx'
 import OfferManagement from './components/OfferManagement.jsx'
 import NavigationMenu from './components/NavigationMenu.jsx'
+import MarketplaceAuth from './components/MarketplaceAuth.jsx'
 import DigitalProducts from './pages/DigitalProducts.jsx'
+import MarketplaceDashboard from './pages/MarketplaceDashboard.jsx'
+import AddProduct from './pages/AddProduct.jsx'
+import BrowseProducts from './pages/BrowseProducts.jsx'
+import ProductDetails from './pages/ProductDetails.jsx'
+import MyProducts from './pages/MyProducts.jsx'
 import heroImage from './assets/hero_image.png'
 import denimaHubLogo from './assets/denima_hub_logo.png'
 import './App.css'
@@ -45,6 +51,11 @@ function HomePage() {
   })
   const [uploadingImage, setUploadingImage] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
+  
+  // Marketplace states
+  const [showMarketplaceAuth, setShowMarketplaceAuth] = useState(false)
+  const [marketplaceUser, setMarketplaceUser] = useState(null)
+  const [marketplaceToken, setMarketplaceToken] = useState(localStorage.getItem('marketplace_token'))
 
   // Language translations
   const translations = {
@@ -582,6 +593,14 @@ function HomePage() {
               >
                 تصميم المواقع
               </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setShowMarketplaceAuth(true)}
+                className="text-gray-700 hover:text-purple-600 flex items-center gap-2"
+              >
+                <Store className="w-4 h-4" />
+                السوق
+              </Button>
             </div>
 
             {/* Desktop Menu */}
@@ -696,6 +715,9 @@ function HomePage() {
                   break;
                 case 'showOfferManagement':
                   setShowOfferManagement(true);
+                  break;
+                case 'openMarketplace':
+                  setShowMarketplaceAuth(true);
                   break;
                 default:
                   break;
@@ -1121,17 +1143,90 @@ function HomePage() {
           <OfferManagement API_BASE_URL={API_BASE_URL} token={token} />
         </DialogContent>
       </Dialog>
+
+      {/* Marketplace Authentication Dialog */}
+      <MarketplaceAuth 
+        isOpen={showMarketplaceAuth}
+        onClose={() => setShowMarketplaceAuth(false)}
+        onLoginSuccess={(user, token) => {
+          setMarketplaceUser(user)
+          setMarketplaceToken(token)
+          setShowMarketplaceAuth(false)
+          window.location.href = '/marketplace'
+        }}
+      />
     </div>
   )
 }
 
 // Main App Component with Router
 function App() {
+  const [marketplaceUser, setMarketplaceUser] = useState(null)
+  const [marketplaceToken, setMarketplaceToken] = useState(localStorage.getItem('marketplace_token'))
+
+  useEffect(() => {
+    // Check if user is logged in to marketplace
+    const storedUser = localStorage.getItem('marketplace_user')
+    if (storedUser && marketplaceToken) {
+      try {
+        setMarketplaceUser(JSON.parse(storedUser))
+      } catch (error) {
+        console.error('Error parsing stored user:', error)
+        localStorage.removeItem('marketplace_user')
+        localStorage.removeItem('marketplace_token')
+      }
+    }
+  }, [marketplaceToken])
+
+  const handleMarketplaceLogin = (user, token) => {
+    setMarketplaceUser(user)
+    setMarketplaceToken(token)
+  }
+
+  const handleMarketplaceLogout = () => {
+    setMarketplaceUser(null)
+    setMarketplaceToken(null)
+    localStorage.removeItem('marketplace_user')
+    localStorage.removeItem('marketplace_token')
+  }
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/digital-products" element={<DigitalProducts />} />
+        <Route 
+          path="/marketplace" 
+          element={
+            marketplaceUser ? (
+              <MarketplaceDashboard user={marketplaceUser} token={marketplaceToken} />
+            ) : (
+              <HomePage />
+            )
+          } 
+        />
+        <Route 
+          path="/marketplace/add-product" 
+          element={
+            marketplaceUser ? (
+              <AddProduct user={marketplaceUser} token={marketplaceToken} />
+            ) : (
+              <HomePage />
+            )
+          } 
+        />
+        <Route path="/marketplace/browse" element={<BrowseProducts />} />
+        <Route path="/marketplace/product/:productId" element={<ProductDetails />} />
+        <Route 
+          path="/marketplace/my-products" 
+          element={
+            marketplaceUser ? (
+              <MyProducts user={marketplaceUser} token={marketplaceToken} />
+            ) : (
+              <HomePage />
+            )
+          } 
+        />
       </Routes>
     </Router>
   );
