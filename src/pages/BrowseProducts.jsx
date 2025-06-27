@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge.jsx';
 import { ArrowRight, Search, Filter, ShoppingCart, MessageCircle, User, Phone, Eye, Grid, List } from 'lucide-react';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://denima-api-backend-production.up.railway.app/api' : 'http://localhost:5000/api';
 
 const BrowseProducts = () => {
   const navigate = useNavigate();

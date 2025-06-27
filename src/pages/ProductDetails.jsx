@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge.jsx';
 import { ArrowRight, MessageCircle, Phone, User, Calendar, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://denima-api-backend-production.up.railway.app/api' : 'http://localhost:5000/api';
 
 const ProductDetails = () => {
   const { productId } = useParams();

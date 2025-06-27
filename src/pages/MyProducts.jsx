@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx';
 import { ArrowRight, Plus, Edit, Trash2, Eye, Package, Calendar } from 'lucide-react';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://denima-api-backend-production.up.railway.app/api' : 'http://localhost:5000/api';
 
 const MyProducts = ({ user, token }) => {
   const navigate = useNavigate();

@@ -25,7 +25,7 @@ import heroImage from './assets/hero_image.png'
 import denimaHubLogo from './assets/denima_hub_logo.png'
 import './App.css'
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://web-production-e7d36.up.railway.app/api' : 'http://localhost:5000/api'
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://denima-api-backend-production.up.railway.app' : 'http://localhost:5000'
 
 // Home Page Component
 function HomePage() {
@@ -260,7 +260,7 @@ function HomePage() {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/services`)
+      const response = await fetch(`${API_BASE_URL}/api/services`)
       if (response.ok) {
         const data = await response.json()
         setServices(data)
@@ -274,7 +274,7 @@ function HomePage() {
 
   const verifyToken = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -297,7 +297,7 @@ function HomePage() {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -341,7 +341,7 @@ function HomePage() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/change_password`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/change_password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -370,7 +370,7 @@ function HomePage() {
   const handleAddService = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`${API_BASE_URL}/services`, {
+      const response = await fetch(`${API_BASE_URL}/api/services`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -398,7 +398,7 @@ function HomePage() {
   const handleEditService = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`${API_BASE_URL}/services/${editingService.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/services/${editingService.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -426,7 +426,7 @@ function HomePage() {
   const handleDeleteService = async (serviceId) => {
     if (confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
       try {
-        const response = await fetch(`${API_BASE_URL}/services/${serviceId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/services/${serviceId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -466,7 +466,7 @@ function HomePage() {
     formData.append('file', file)
     
     try {
-      const response = await fetch(`${API_BASE_URL}/upload`, {
+      const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
