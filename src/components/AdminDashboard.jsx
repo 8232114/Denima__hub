@@ -143,6 +143,8 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [products, setProducts] = useState([])
   const [orders, setOrders] = useState([])
+  const [totalUsers, setTotalUsers] = useState(0)
+  const [totalRevenue, setTotalRevenue] = useState(0)
   const [showAddProduct, setShowAddProduct] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -165,11 +167,13 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
   useEffect(() => {
     fetchProducts()
     fetchOrders()
+    fetchTotalUsers()
+    fetchTotalRevenue()
   }, [])
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/products")
       const data = await response.json()
       if (data.success) {
         setProducts(data.products)
@@ -181,7 +185,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('/api/orders')
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/orders")
       const data = await response.json()
       if (data.success) {
         setOrders(data.orders)
@@ -199,7 +203,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
     formData.append('image', file)
 
     try {
-      const response = await fetch('/api/upload-image', {
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/upload-image", {
         method: 'POST',
         body: formData
       })
@@ -225,7 +229,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleAddProduct = async () => {
     try {
-      const response = await fetch('/api/products', {
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -260,7 +264,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await fetch(`/api/products/${editingProduct.id}`, {
+      const response = await fetch(`https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products/${editingProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -285,14 +289,15 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
   const handleDeleteProduct = async (productId) => {
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
       try {
-        const response = await fetch(`/api/products/${productId}`, {
+        const response = await fetch(`https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products/${productId}`, {
           method: 'DELETE'
         })
         
         const data = await response.json()
         if (data.success) {
           setProducts(products.filter(p => p.id !== productId))
-          alert('تم حذف المنتج بنجاح')
+          alert("تم حذف المنتج بنجاح")
+          fetchProducts()
         } else {
           alert('خطأ في حذف المنتج: ' + data.error)
         }
@@ -350,7 +355,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-purple-100">{t.totalUsers}</p>
-                <p className="text-3xl font-bold">156</p>
+                <p className="text-3xl font-bold">{totalUsers}</p>
               </div>
               <Users className="w-8 h-8 text-purple-200" />
             </div>
@@ -362,7 +367,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-orange-100">{t.revenue}</p>
-                <p className="text-3xl font-bold">$12,450</p>
+                <p className="text-3xl font-bold">${totalRevenue.toLocaleString()}</p>
               </div>
               <TrendingUp className="w-8 h-8 text-orange-200" />
             </div>
@@ -869,4 +874,31 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
     </div>
   )
 }
+
+
+
+  const fetchTotalUsers = async () => {
+    try {
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/users/count")
+      const data = await response.json()
+      if (data.success) {
+        setTotalUsers(data.total_users)
+      }
+    } catch (error) {
+      console.error("Error fetching total users:", error)
+    }
+  }
+
+  const fetchTotalRevenue = async () => {
+    try {
+      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/revenue")
+      const data = await response.json()
+      if (data.success) {
+        setTotalRevenue(data.total_revenue)
+      }
+    } catch (error) {
+      console.error("Error fetching total revenue:", error)
+    }
+  }
+
 
