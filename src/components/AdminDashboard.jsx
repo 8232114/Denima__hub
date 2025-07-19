@@ -173,7 +173,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`/admin/products`)
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/admin/products`)
       const data = await response.json()
       if (data.success) {
         setProducts(data.products)
@@ -185,7 +185,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch(`/orders`)
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/orders`)
       const data = await response.json()
       if (data.success) {
         setOrders(data.orders)
@@ -203,7 +203,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
     formData.append('image', file)
 
     try {
-      const response = await fetch(`/upload-image`, {
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/upload-image`, {
         method: 'POST',
         body: formData
       })
@@ -229,7 +229,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleAddProduct = async () => {
     try {
-      const response = await fetch(`/products`, {
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +264,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await fetch(`/products/${editingProduct.id}`, {
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/products/${editingProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
   const handleDeleteProduct = async (productId) => {
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
       try {
-        const response = await fetch(`/products/${productId}`, {
+        const response = await fetch(`import.meta.env.VITE_API_URL}/api/products/${productId}`, {
           method: 'DELETE'
         })
         
@@ -879,7 +879,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchTotalUsers = async () => {
     try {
-      const response = await fetch(`/admin/users/count`)
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/admin/users/count`)
       const data = await response.json()
       if (data.success) {
         setTotalUsers(data.total_users)
@@ -891,7 +891,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchTotalRevenue = async () => {
     try {
-      const response = await fetch(`/admin/revenue`)
+      const response = await fetch(`import.meta.env.VITE_API_URL}/api/admin/revenue`)
       const data = await response.json()
       if (data.success) {
         setTotalRevenue(data.total_revenue)
