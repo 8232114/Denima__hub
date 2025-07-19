@@ -173,7 +173,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/products")
+      const response = await fetch(`/admin/products`)
       const data = await response.json()
       if (data.success) {
         setProducts(data.products)
@@ -185,7 +185,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/orders")
+      const response = await fetch(`/orders`)
       const data = await response.json()
       if (data.success) {
         setOrders(data.orders)
@@ -203,7 +203,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
     formData.append('image', file)
 
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/upload-image", {
+      const response = await fetch(`/upload-image`, {
         method: 'POST',
         body: formData
       })
@@ -229,7 +229,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleAddProduct = async () => {
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products", {
+      const response = await fetch(`/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +264,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await fetch(`https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products/${editingProduct.id}`, {
+      const response = await fetch(`/products/${editingProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
   const handleDeleteProduct = async (productId) => {
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
       try {
-        const response = await fetch(`https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/products/${productId}`, {
+        const response = await fetch(`/products/${productId}`, {
           method: 'DELETE'
         })
         
@@ -879,7 +879,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchTotalUsers = async () => {
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/users/count")
+      const response = await fetch(`/admin/users/count`)
       const data = await response.json()
       if (data.success) {
         setTotalUsers(data.total_users)
@@ -891,7 +891,7 @@ export default function AdminDashboard({ language = 'ar', setCurrentPage }) {
 
   const fetchTotalRevenue = async () => {
     try {
-      const response = await fetch("https://5000-idfyqdntdkoifwuar1i51-f04d3650.manusvm.computer/admin/revenue")
+      const response = await fetch(`/admin/revenue`)
       const data = await response.json()
       if (data.success) {
         setTotalRevenue(data.total_revenue)
